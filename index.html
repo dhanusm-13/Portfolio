@@ -1,0 +1,434 @@
+<!DOCTYPE html>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tech Portfolio</title>
+    <link rel="stylesheet" href="index.css">
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Sacramento&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/devicon.min.css">
+    <script defer src="index.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
+</head>
+<body class="light-mode">
+    
+    <header>
+        <nav>
+            <button id="mobile-menu-toggle" class="mobile-menu-toggle">
+                <i class="fas fa-bars"></i>
+            </button>
+            <div class="logo">
+                <span class="logo-text">Dhananjaya S M</span>
+            </div>
+            <ul id="nav-menu">
+                <li><a href="#about">Home</a></li>
+                <li><a href="#about-me">About</a></li>
+                <li><a href="#education">Education</a></li>
+                <li><a href="#skills">Skills</a></li>
+                <li><a href="#projects">Projects</a></li>
+                <li><a href="#certifications">Certifications</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+            <button id="theme-toggle" class="theme-toggle">
+                <i class="fas fa-sun"></i>
+            </button>
+        </nav>
+    </header>
+
+    <main class="main-frame">
+        <section id="about" class="section-container">
+            <div class="profile-container">
+                <div class="profile-image-container">
+                    <img src="assets/d.png" alt="Profile Picture" class="profile-image">
+                </div>
+                <div class="about-content">
+                    <h1 class="glitch-text">Hello, I'm Dhananjaya S M</h1>
+                    <b><p class="typewriter">Tech Enthusiast & Developer </p></b>
+                    <p class="about-description">Passionate about creating innovative solutions and exploring new technologies.</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="about-me" class="section-container">
+            <div class="about-me-container">
+                <h2 class="section-title">About Me</h2>
+                <div class="about-me-content">
+                    <div class="about-me-text">
+                        <p class="about-me-description">
+                            MCA graduate from Acharya Institute of Technology, Bengaluru, with a strong foundation in programming, problem-solving, and 
+                            software development. Quick learner with good teamwork and communication skills. Eager to apply academic knowledge, explore emerging technologies, and grow professionally in the tech industry.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="education" class="section-container">
+            <h2 class="section-title">Education Journey</h2>
+            <div class="education-map-container">
+                <div id="education-map" class="education-map">
+                    <div class="road"></div>
+                    
+                    <div class="milestone">
+                        <img src="assets/SSLC.jpg" alt="SSLC" width="67">
+                        <div class="milestone-data">
+                            <h3>SSLC</h3>
+                            <hr>
+                            <p>Central High School, Urdigere</p>
+                            <p>2016 - 2017</p>
+                            <p>Percentage: 76.8%</p>
+                        </div>
+                    </div>
+        
+                    <div class="milestone">
+                        <img src="assets/PU.png" alt="PUC" width="60">
+                        <div class="milestone-data">
+                            <h3>Pre-University (CEBA)</h3>
+                            <hr>
+                            <p>Sri Renuka Vidya Peeta, Tumakuru</p>
+                            <p>2018 - 2019</p>
+                            <p>Percentage: 86.16%</p>
+                        </div>
+                    </div>
+        
+                    <div class="milestone">
+                        <img src="assets/Uni.png" alt="BCA" width="60">
+                        <div class="milestone-data">
+                            <h3>Bachelor of Computer Applications</h3>
+                            <hr>
+                            <p>University College of Science, Tumakuru </p><p>2019 - 2022</p>
+                            <p>CGPA: 7.78</p>
+                        </div>
+                    </div>
+        
+                    <div class="milestone last-Milestone">
+                        <img src="assets/AIT.png" alt="MCA" width="67">
+                        <div class="milestone-data">
+                            <h3>Master of Computer Applications</h3>
+                            <hr>
+                            <p>Acharya Institute of Technology, Bangalore</p>
+                            <p>2023 - 2025</p>
+                            <p>CGPA: 8</p>
+                        </div>
+                    </div>
+        
+                </div>
+            </div>
+        </section>
+        
+
+        <section id="skills" class="section-container">
+            <h2 class="section-title">Skills & Technologies</h2>
+            <div class="skills-grid">
+                <div class="skill-card" data-skill="java">
+                    <i class="fab fa-java"></i>
+                    <span>Java</span>
+                </div>
+                <div class="skill-card" data-skill="Python">
+                    <i class="fab fa-python"></i>
+                    <span>Python</span>
+                </div>
+                <div class="skill-card" data-skill="C">
+                    <i class="devicon-c-plain"></i>
+                    <span>C</span>
+                </div>
+                <div class="skill-card" data-skill="Pycharm">
+                    <i class="devicon-pycharm-plain"></i>
+                    <span>Pycharm</span>
+          
+                </div>
+                <div class="skill-card" data-skill="Jupyter notebook">
+                    <i class="devicon-jupyter-plain-wordmark"></i>
+                    <span>JUpyter notebook</span>
+                </div>
+                <div class="skill-card" data-skill="Flask">
+                    <i class="devicon-flask-original-wordmark"></i>
+                    <span>Flask</span>
+          
+                </div>
+                <div class="skill-card" data-skill="HTML5">
+                    <i class="fab fa-html5"></i>
+                    <span>HTML5</span>
+                </div>
+                <div class="skill-card" data-skill="CSS3">
+                    <i class="fab fa-css3-alt"></i>
+                    <span>CSS3</span>
+                </div>
+                <div class="skill-card" data-skill="JavaScript">
+                    <i class="fab fa-js"></i>
+                    <span>JavaScript</span>
+                </div>
+               
+                <div class="skill-card" data-skill="SQL">
+                    <i class="fas fa-database"></i>
+                    <span>SQL</span>
+                </div>
+                <div class="skill-card" data-skill="MySQL">
+                    <i class="devicon-mysql-plain"></i>
+                    <span>MySQL</span>
+                </div>
+                <div class="skill-card" data-skill="Git">
+                    <i class="devicon-git-plain"></i>
+                    <span>Git</span>
+                </div>
+                <div class="skill-card" data-skill="GitHub">
+                    <i class="devicon-github-plain"></i>
+                    <span>GitHub</span>
+                </div>
+
+                <!-- Add more skills as needed -->
+            </div>
+        </section>
+
+        <section id="projects" class="section-container">
+            <h2 class="section-title">Projects</h2>
+            <div class="projects-grid">
+
+                <!-- Project 1 -->
+                <div class="project-card">
+                <img src="assets/password.jpg" alt="Password Generator">
+                <div class="project-info">
+                    <h5>Random Password Generator using Python</h5>
+                    <p>
+                    A Python-based password generator that creates strong, random
+                    passwords with user-specified lengths, enhancing security with
+                    unique and complex combinations.
+                    </p>
+                    <div class="project-links">
+                    <a href="https://github.com/dhanusm-13/Password-generator" class="github-link"><i class="fab fa-github"></i></a>
+                    </div>
+                </div>
+                </div>
+
+                <!-- Project 2 with Video -->
+                <div class="project-card">
+                <video controls>
+                    <source src="assets/DBAna.mp4" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+                <div class="project-info">
+                    <h5>Deforsestation and Biodiversity Analysis</h5>
+                    <p>
+                    This project analyzes forest area, biodiversity, and drivers of deforestation across different states and years. Using Python, Pandas, and visualization libraries, it highlights trends, correlations, and extreme cases of forest loss.
+                    </p>
+                    <div class="project-links">
+                    <a href="https://github.com/dhanusm-13/Deforsestation-and-biodiversity-analysis" class="github-link"><i class="fab fa-github"></i></a>
+                    </div>
+                </div>
+                </div>
+
+                <!-- Project 3 -->
+                <div class="project-card">
+                    <video controls>
+                <source src="assets/OTTdash.mp4" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+                <div class="project-info">
+                    <h5>OTT Streaming Analytics Dashboard (Power BI)</h5>
+                    <p>
+                    Built a multi-page Power BI dashboard analyzing Netflix, Amazon Prime, and Jio Hotstar content.  Developed     DAX-based KPIs,interactive slicers, navigation buttons, and branded UI layouts to deliver insights on genres, ratings, durations, and yearly release trends.
+                    </p>
+                    <div class="project-links">
+                    <a href="https://github.com/dhanusm-13/OTT_Dashboard" class="github-link"><i class="fab fa-github"></i></a>
+                    </div>
+                </div>
+                </div>
+                <div class="project-card">
+                        <iframe 
+                            src="https://drive.google.com/file/d/1RlrE2ZjDNZBgTqXRhWYOjxrhgF07pAPW/preview"
+                            width="100%" 
+                            height="200"
+                            allow="autoplay">
+                        </iframe>
+
+                <div class="project-info">
+                    <h5>AI-Powered Resume Screening System</h5>
+                    <p>
+                    Developed an AI-based system to parse resumes, evaluate resume quality, match job descriptions, and generate personalized interview questions using transformer models. Implemented BERT for classification, FLAN-T5 for question generation, SBERT for filtering, and Flask for the web interface.
+                    </p>
+                    <div class="project-links">
+                    <a href="https://github.com/dhanusm-13/Resume-Questions" class="github-link"><i class="fab fa-github"></i></a>
+                    </div>
+                </div>
+                </div>
+
+            </div>
+        </section>
+
+        <section id="publications" class="section-container">
+            <h2 class="section-title">Research Publications</h2>
+            <div class="publications-container">
+                
+                <div class="publication-card">
+                    <img src="assets/fjpd.jpg" alt="paper1">
+                    <div class="publication-info">
+                        <h3>Automated Job Post Authenticity Verification </h3>
+                        <p>Published in Scientia Journals</p>
+                        <div class="publication-links">
+                            <a href="https://doi.org/10.59324/stss.2025.2(7).05"target="_blank" title="View Paper">
+                                <i class="fas fa-link"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="publication-card">
+                    <img src="assets/hrq.jpg" alt="paper2">
+                    <div class="publication-info">
+                        <h3>A Hybrid NLP and Transformer-Based System for Resume Analysis and Interview Question Generation</h3>
+                        <p>Published in Genome Publications</p>
+                        <div class="publication-links">
+                            <a href="https://doi.org/10.61096/978-81-990998-5-2_7" target="_blank" title="View Paper">
+                                <i class="fas fa-link"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <section id="certifications" class="section-container">
+            <h2 class="section-title">Certifications</h2>
+            <div class="certificates-container">
+                <button class="scroll-btn prev"><i class="fas fa-chevron-left"></i></button>
+                <div class="certificates-slider">
+                    <div class="certificate-card">
+                        <img src="assets/JAVA.png" alt="Certificate 1">
+                        <div class="certificate-info">
+                            <h3>Java Certification Course-2024</h3>
+                            <p>Programming Hub</p>
+                        </div>
+                    </div>
+    
+                    <div class="certificate-card">
+                        <img src="assets/mysql.png" alt="Certificate 2">
+                        <div class="certificate-info">
+                            <h3>MySQL Essential Training-2025</h3>
+                            <p>Linkedin Learning</p>
+                        </div>
+                    </div>
+                    <div class="certificate-card">
+                        <img src="assets/buildingwebsite.png" alt="Certificate 7">
+                        <div class="certificate-info">
+                            <h3>Building a Website Certification Course-2025</h3>
+                            <p>Programming Hub</p>
+                        </div>
+                    </div>
+                     <div class="certificate-card">
+                        <img src="assets/python.jpg" alt="Certificate 7">
+                        <div class="certificate-info">
+                            <h3> Learning Python(2021)</h3>
+                            <p>Linkedin Learning</p>
+                        </div>
+                    </div>
+                </div>
+                <button class="scroll-btn next"><i class="fas fa-chevron-right"></i></button>
+            </div>
+        </section>
+        
+       
+        <!-- Include EmailJS Library -->
+        <section id="contact" class="section-container">
+            <h2 class="section-title">Get in Touch</h2>
+            <div class="contact-wrapper">
+                <!-- Contact Cards -->
+                <div class="contact-cards">
+                    <a href="https://mail.google.com/mail/?view=cm&fs=1&to=smdhanu652@gmail.com&su=Subject&body=Message body" target="_blank" style="text-decoration: none;">
+                        <div class="contact-card">
+                            <div class="card-icon"><i class="fas fa-envelope"></i></div>
+                            <div class="card-content"><h3>Email</h3><p>smdhanu652@gmail.com</p></div>
+                        </div>
+                    </a>
+                    <a href="tel:+91" style="text-decoration: none;">
+                        <div class="contact-card">
+                            <div class="card-icon"><i class="fas fa-phone"></i></div>
+                            <div class="card-content"><h3>Contact</h3><p>+91 8296643670</p></div>
+                        </div>
+                    </a>
+                    <a href="https://maps.app.goo.gl/7vDtfbp1keJ2VFL6A" style="text-decoration: none;">
+                        <div class="contact-card">
+                            <div class="card-icon"><i class="fas fa-map-marker-alt"></i></div>
+                            <div class="card-content"><h3>Address</h3><p>Bengaluru,Karnataka,India</p>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+        
+                <!-- Contact Form -->
+                <div class="contact-container">
+                    <form id="contact-form" class="contact-form" action="https://api.web3forms.com/submit" method="POST">
+                        <input type="hidden" name="access_key" value="aa843825-c618-4e79-8f3e-ddf87c7e7ff4">
+                        <input type="hidden" name="subject" value="📩 New Contact Form Submission">
+                        <input type="hidden" name="replyto" value="email">
+                        <input type="hidden" id="formatted-message" name="message">
+        
+                        <div class="form-group">
+                            <input type="text" id="name" name="name" required>
+                            <label for="name">Name</label>
+                            <span class="error-message" id="name-error"></span>
+                        </div>
+                        <div class="form-group">
+                            <input type="email" id="email" name="email" required>
+                            <label for="email">Email</label>
+                            <span class="error-message" id="email-error"></span>
+                        </div>
+                        <div class="form-group">
+                            <textarea id="message" name="message" rows="5" required ></textarea>
+                            <label for="message">Message</label>
+                            <span class="error-message" id="message-error"></span>
+                        </div>
+                        <button type="submit" class="submit-btn">Send Message</button>
+                        <p id="form-response"></p>
+                    </form>
+                </div>
+            </div>
+        </section>
+
+<!-- Link to the updated JavaScript file -->
+
+    </main>
+
+    <footer>
+        <div class="social-links">
+            <a href="https://drive.google.com/file/d/1n33kP8I6FNa78fHpXKH-c7f7tJizrlGH/view?usp=sharing" class="social-link" title="Resume" target="_blank_">
+                <i class="fas fa-file-pdf"></i>
+            </a>
+            <a href="https://www.linkedin.com/in/dhananjaya-s-m-22a960308/" class="social-link" title="LinkedIn" target="_blank_">
+                <i class="fab fa-linkedin"></i>
+            </a>
+            <a href="https://github.com/dhanusm-13" class="social-link" title="GitHub" target="_blank_">
+                <i class="fab fa-github"></i>
+            </a>
+        
+            </a>
+            <a href="http://internetbreezy.blogspot.com/" target="_blank_" class="social-link" title="Blog">
+                <i class="fab fa-blogger"></i>
+            </a>
+        </div>
+        <br>
+        <p style="color: #fff; text-align: center;">© 2025 Dhananjaya S M. All Rights Reserved.</p>
+    </footer>
+    
+        
+        <style>
+        /* Basic error message styling */
+        .error-message {
+            color: red;
+            font-size: 0.875rem;
+            margin-top: 5px;
+        }
+        #form-response {
+            font-size: 1rem;
+            margin-top: 10px;
+        }
+        </style>
+    <button id="backToTop" class="back-to-top">
+        <i class="fas fa-arrow-up"></i>
+    </button>
+         
+        
+</body>
+</html>
