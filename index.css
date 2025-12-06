@@ -197,7 +197,7 @@ nav a:hover::after {
     width: 270px;
     height: 270px;
     overflow: hidden;
-    border-radius: 40%;
+    border-radius: 15%;
     cursor: pointer;
     transition: transform 0.5s ease;
     flex-shrink: 0;
@@ -658,7 +658,7 @@ nav a:hover::after {
     right: 0;
     background: rgba(0, 0, 0, 0.75);
     color: white;
-    padding: 1rem;
+    padding: .8rem;
     transition: transform 0.3s ease;
     transform: translateY(100%);
 }
@@ -1007,6 +1007,12 @@ footer {
         font-size: 1.1rem;
         white-space: normal;
     }
+
+    .skills-grid {
+        grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+        gap: 1rem;
+        padding: 1rem;
+    }
     
     .section-container {
         padding: 3rem 1rem 1.5rem;
@@ -1027,6 +1033,10 @@ footer {
 
     .milestone {
         max-width: 90%; 
+    }
+
+    .publication-info{
+        font-size: small;
     }
    
 
