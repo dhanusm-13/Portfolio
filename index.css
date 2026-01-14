@@ -1475,7 +1475,7 @@ footer {
     box-shadow: 0 0 5px rgb(93, 171, 255), 0 0 25px rgb(93, 171, 255);
 }
 
-@media (max-width: 991px) {
+@media (max-width: 798px) {
 
     /* 1. CONTAINER - Shifted Left */
     #education .education-map-container,
