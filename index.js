@@ -352,41 +352,79 @@ document.addEventListener("DOMContentLoaded", function () {
 
 // Add this to your index.js file
 
-document.addEventListener('DOMContentLoaded', function() {
-    // Function to check if element is in viewport
-    function isInViewport(element) {
-        const rect = element.getBoundingClientRect();
-        return (
-            rect.top <= (window.innerHeight || document.documentElement.clientHeight) * 0.8 &&
-            rect.bottom >= 0
-        );
-    }
+// document.addEventListener('DOMContentLoaded', function() {
+//     // Function to check if element is in viewport
+//     function isInViewport(element) {
+//         const rect = element.getBoundingClientRect();
+//         return (
+//             rect.top <= (window.innerHeight || document.documentElement.clientHeight) * 0.8 &&
+//             rect.bottom >= 0
+//         );
+//     }
 
-    // Function to animate education timeline
-    function animateEducation() {
-        const educationSection = document.getElementById('education');
-        const road = document.querySelector('.road');
-        const milestones = document.querySelectorAll('.milestone');
+//     // Function to animate education timeline
+//     function animateEducation() {
+//         const educationSection = document.getElementById('education');
+//         const road = document.querySelector('.road');
+//         const milestones = document.querySelectorAll('.milestone');
         
-        if (isInViewport(educationSection)) {
-            // Animate the road first
-            road.classList.add('animate');
+//         if (isInViewport(educationSection)) {
+//             // Animate the road first
+//             road.classList.add('animate');
             
-            // Then animate each milestone with a slight delay
-            setTimeout(() => {
-                milestones.forEach(milestone => {
-                    milestone.classList.add('animate');
-                });
-            }, 500); // 500ms delay after road animation starts
+//             // Then animate each milestone with a slight delay
+//             setTimeout(() => {
+//                 milestones.forEach(milestone => {
+//                     milestone.classList.add('animate');
+//                 });
+//             }, 500); // 500ms delay after road animation starts
             
-            // Remove scroll event listener once animation is triggered
-            window.removeEventListener('scroll', animateEducation);
-        }
-    }
+//             // Remove scroll event listener once animation is triggered
+//             window.removeEventListener('scroll', animateEducation);
+//         }
+//     }
 
-    // Initial check on page load
-    animateEducation();
+//     // Initial check on page load
+//     animateEducation();
     
-    // Listen for scroll events to trigger animation
-    window.addEventListener('scroll', animateEducation);
+//     // Listen for scroll events to trigger animation
+//     window.addEventListener('scroll', animateEducation);
+// });
+/* ==========================================
+   UPDATED: Education Scroll Animation
+   (Replaces the old animateEducation function)
+   ========================================== */
+document.addEventListener('DOMContentLoaded', function() {
+    const educationSection = document.getElementById('education');
+    const road = document.querySelector('.road');
+    const milestones = document.querySelectorAll('.milestone');
+
+    // Use IntersectionObserver (Better performance than window.onscroll)
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            // When the section comes into view...
+            if (entry.isIntersecting) {
+                
+                // 1. Trigger Mobile Animation (matches your new CSS)
+                educationSection.classList.add('view-active');
+
+                // 2. Trigger Desktop Animation (matches your existing CSS)
+                if (road) road.classList.add('animate');
+                
+                setTimeout(() => {
+                    milestones.forEach(milestone => {
+                        milestone.classList.add('animate');
+                    });
+                }, 500);
+
+                // Stop observing (run only once)
+                observer.unobserve(entry.target);
+            }
+        });
+    }, { threshold: 0.1 }); // Trigger when 10% of the section is visible
+
+    if (educationSection) {
+        observer.observe(educationSection);
+    }
 });
+
