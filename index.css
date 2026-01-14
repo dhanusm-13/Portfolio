@@ -1,3 +1,10 @@
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+}
+
+
 :root {
     --primary-light: #f8f9fa;
     --secondary-light: #e9ecef;
@@ -1324,20 +1331,21 @@ footer {
         transition: transform var(--transition-speed);
     }
     .project-card {
-        left: -7%;
         position: relative;
-        object-fit:cover;
+        margin: 0 auto;        /* ✅ center */
+        width: 100%;
+        max-width: 350px;      /* optional, looks nice on mobile */
         border-radius: 10px;
         overflow: hidden;
         box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
     }
     .project-info h5 {
         object-fit: fill;
-        margin-bottom: 0.7rem;
+        margin-bottom: 0.9rem;
     }
     .project-info p {
         color: rgba(255, 255, 255, 0.8);
-        font-size: 0.7rem;
+        font-size: .9rem;
     }
     .project-links a {
         width: 35px; 
@@ -1366,19 +1374,31 @@ footer {
         z-index: 50;
     }
     .projects-grid {
-        grid-template-columns: 1fr; /* Stack projects in a single column */
-        gap: 1.5rem;
-        padding: 0.5rem;
-    }
+    display: grid;
+    grid-template-columns: 1fr;
+    justify-items: center;
+    padding:0 1rem; /* ✅ centers cards */
+}
+
     .project-card {
-        height: 240px; 
-        left: 0; /* Reset any negative offsets from previous styles */
+        margin: 0 auto;        /* ✅ center */
+        width: 100%;
+        max-width: 320px;
+        left: 0;
+        overflow: hidden;               /* ✅ reset */
     }
     .project-card img {
         width:100%;
         height:120%;
         object-fit:fill;
         
+    }
+    .project-card img,
+    .project-card video, .project-card iframe{
+        width: 100%;
+        height: 250px;
+        object-fit: cover;
+        border-radius: 8px;
     }
     
     .project-info {
@@ -1392,7 +1412,7 @@ footer {
         transition: transform var(--transition-speed);
     }
     .project-card {
-        left: -7%;
+        
         position: relative;
         object-fit:fill;
         border-radius: 10px;
@@ -1402,13 +1422,14 @@ footer {
     .project-info h5 {
         object-fit: fill;
         color: white;
-        margin-bottom: 0.8rem;
+        margin-bottom: 1.3rem;
     }
     
     .project-info p {
         position: relative;
+        text-align: justify;
         color: rgba(255, 255, 255, 0.8);
-        font-size: 0.5rem;
+        font-size: 0.8rem;
     }
     .contact-cards {
         gap: 1rem; 
@@ -1573,7 +1594,8 @@ footer {
         opacity: 1 !important;
         visibility: visible !important;
         
-        width: 130%;
+        /* width: 130%; */
+        width: auto !important;
         background: #ffffff !important;
         padding: .9rem !important;
         border-radius: 12px !important;
@@ -1634,16 +1656,16 @@ footer {
     }
 
     #education .milestone:last-child {
-        margin-top: 30px !important; 
+        margin-top: 40px !important; 
     }
     #education .milestone:nth-child(4) .milestone-data::after {
         top: 60px !important; 
     }
      #education .milestone:nth-child(3) .milestone-data::after {
-        top: 50px !important; 
+        top: 60px !important; 
     }
 
      #education .milestone:last-child .milestone-data::after {
-        top: 60px !important;
+        top: 75px !important;
 }
 }
