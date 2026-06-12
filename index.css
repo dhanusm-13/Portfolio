@@ -594,3 +594,51 @@ body::after {
     font-size: 40px;
     cursor: pointer;
 }
+
+/* --- BACK TO TOP BUTTON (BENTO THEME) --- */
+#backToTop {
+    display: none; /* Hidden by default */
+    position: fixed;
+    bottom: 40px;
+    right: 40px;
+    z-index: 999;
+    
+    /* Matches your Bento Cards */
+    background: rgba(255, 255, 255, 0.03);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid var(--card-border);
+    color: var(--text-secondary);
+    
+    /* Perfect Circle Centering */
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    font-size: 1.2rem;
+    cursor: pointer;
+    transition: var(--transition);
+    
+    /* Centers the icon inside the button */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* The neon hover effect from your cards */
+#backToTop:hover {
+    background: rgba(14, 165, 233, 0.1);
+    border-color: var(--accent-color);
+    color: var(--accent-color);
+    transform: translateY(-5px);
+    box-shadow: 0 10px 30px var(--accent-glow);
+}
+
+/* Mobile adjustment */
+@media (max-width: 768px) {
+    #backToTop {
+        bottom: 20px;
+        right: 20px;
+        width: 45px;
+        height: 45px;
+    }
+}
