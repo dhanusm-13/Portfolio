@@ -1,23 +1,28 @@
 document.addEventListener('DOMContentLoaded', function() {
 
-    // --- 1. MOBILE MENU TOGGLE ---
+    // --- 1. SLIDING MOBILE MENU TOGGLE ---
     const mobileMenuToggle = document.getElementById('mobile-menu-toggle');
-    const navLinks = document.querySelector('.nav-links');
+    const slidingMenu = document.getElementById('sliding-menu');
 
-    if (mobileMenuToggle && navLinks) {
-        // Toggle menu open/close when clicking the hamburger icon
+    if (mobileMenuToggle && slidingMenu) {
+        // Toggle menu open/close and animate the icon
         mobileMenuToggle.addEventListener('click', function() {
-            navLinks.classList.toggle('active');
+            slidingMenu.classList.toggle('active');
+            
+            // This line triggers the SVG animation!
+            mobileMenuToggle.classList.toggle('is-active'); 
         });
 
         // Close the menu automatically when any link is clicked
         document.querySelectorAll('.nav-links a').forEach(link => {
             link.addEventListener('click', () => {
-                navLinks.classList.remove('active');
+                slidingMenu.classList.remove('active');
+                
+                // Reset the icon back to 3 lines
+                mobileMenuToggle.classList.remove('is-active'); 
             });
         });
     }
-
     // --- 2. SMOOTH SCROLLING ---
     document.querySelectorAll('nav a').forEach(anchor => {
         anchor.addEventListener('click', function(e) {
@@ -255,4 +260,41 @@ ${message}
         certModal.onclick = (e) => {
             if (e.target !== fullCertImg) certModal.style.display = "none";
         };
+    }
+
+    // ==========================================
+    // BACK TO TOP BUTTON LOGIC
+    // ==========================================
+    const backToTopButton = document.getElementById("backToTop");
+    let isLaunching = false; // The lock variable
+    
+    if (backToTopButton) {
+        window.addEventListener("scroll", function () {
+            // If the rocket is currently flying, ignore the scroll completely!
+            if (isLaunching) return;
+
+            if (window.scrollY > 200) {
+                backToTopButton.style.display = "flex";
+            } else {
+                backToTopButton.style.display = "none";
+            }
+        });
+
+        backToTopButton.addEventListener("click", function () {
+            isLaunching = true; // Lock the button
+            backToTopButton.classList.add('btn-launch');
+
+            window.scrollTo({
+                top: 0,
+                behavior: "smooth"
+            });
+
+            // Wait 1.2 seconds (1200ms) to give the page plenty of time 
+            // to finish its smooth scroll before we reset the rocket.
+            setTimeout(() => {
+                backToTopButton.style.display = "none";
+                backToTopButton.classList.remove('btn-launch');
+                isLaunching = false; // Unlock it for next time
+            }, 1200); 
+        });
     }

@@ -14,7 +14,15 @@
 <body class="dark-theme">
     
     <nav class="navbar">
-        <div class="logo">Dhananjaya S M</div>
+    <div class="logo">Dhananjaya S M</div>
+    
+    <!-- Sliding Mobile Menu Container -->
+    <div class="sliding-menu-container" id="sliding-menu">
+        <!-- The curved SVG edge -->
+        <svg class="menu-curve" viewBox="0 0 100 800" preserveAspectRatio="none">
+            <path d="M0,0 Q100,400 0,800 L0,800 L0,0 Z"></path>
+        </svg>
+        
         <ul class="nav-links">
             <li><a href="#about">About</a></li>
             <li><a href="#skills">Skills</a></li>
@@ -23,8 +31,17 @@
             <li><a href="#publications">Research</a></li>
             <li><a href="#contact">Contact</a></li>
         </ul>
-        <button id="mobile-menu-toggle"><i class="fas fa-bars"></i></button>
-    </nav>
+    </div>
+
+    <!-- Mobile Menu Toggle Button -->
+    <button id="mobile-menu-toggle" aria-label="Open Mobile Menu">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <line class="line-top" x1="3" y1="6" x2="21" y2="6"></line>
+            <line class="line-middle" x1="3" y1="12" x2="21" y2="12"></line>
+            <line class="line-bottom" x1="3" y1="18" x2="21" y2="18"></line>
+        </svg>
+    </button>
+</nav>
 
     <main class="container">
         
@@ -139,10 +156,7 @@
     </div>
 </section>
 
-<div id="cert-modal" class="modal">
-    <span class="close-modal">&times;</span>
-    <img class="modal-content" id="full-cert-img">
-</div>
+
 
 
         <section id="projects" class="section-padding">
@@ -273,7 +287,6 @@
     <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
         <path d="M12 19V5M5 12l7-7 7 7"/>
     </svg>
-</button>
 </button>
 </body>
 </html>
