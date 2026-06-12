@@ -5,24 +5,19 @@ document.addEventListener('DOMContentLoaded', function() {
     const slidingMenu = document.getElementById('sliding-menu');
 
     if (mobileMenuToggle && slidingMenu) {
-        // Toggle menu open/close and animate the icon
         mobileMenuToggle.addEventListener('click', function() {
             slidingMenu.classList.toggle('active');
-            
-            // This line triggers the SVG animation!
             mobileMenuToggle.classList.toggle('is-active'); 
         });
 
-        // Close the menu automatically when any link is clicked
         document.querySelectorAll('.nav-links a').forEach(link => {
             link.addEventListener('click', () => {
                 slidingMenu.classList.remove('active');
-                
-                // Reset the icon back to 3 lines
                 mobileMenuToggle.classList.remove('is-active'); 
             });
         });
     }
+
     // --- 2. SMOOTH SCROLLING ---
     document.querySelectorAll('nav a').forEach(anchor => {
         anchor.addEventListener('click', function(e) {
@@ -36,11 +31,10 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
 
-    // --- 3. CONTACT FORM (Merged: Validation, Custom Message & No-Redirect) ---
+    // --- 3. CONTACT FORM ---
     const contactForm = document.getElementById('contact-form');
     const submitButton = document.getElementById('submit-button');
     
-    // Ensure we have a place to show the result message
     let formResult = document.getElementById('form-result');
     if (!formResult && contactForm) {
         formResult = document.createElement('p');
@@ -52,9 +46,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     if (contactForm) {
         contactForm.addEventListener('submit', async function(e) {
-            e.preventDefault(); // Stop standard redirect
-
-            // Grab inputs
+            e.preventDefault(); 
             let nameInput = contactForm.querySelector('input[name="name"]');
             let emailInput = contactForm.querySelector('input[name="email"]');
             let messageInput = contactForm.querySelector('textarea[name="message"]');
@@ -64,7 +56,6 @@ document.addEventListener('DOMContentLoaded', function() {
             let message = messageInput ? messageInput.value.trim() : "";
             let currentDate = new Date().toLocaleDateString("en-US");
 
-            // Basic validation
             if (!name || !email || !message) {
                 formResult.style.display = 'block';
                 formResult.innerHTML = "❌ Please fill out all fields.";
@@ -72,14 +63,12 @@ document.addEventListener('DOMContentLoaded', function() {
                 return;
             }
 
-            // Show loading state
             submitButton.innerHTML = 'Sending... <i class="fas fa-spinner fa-spin"></i>';
             submitButton.disabled = true;
             formResult.style.display = 'block';
             formResult.innerHTML = "Sending message...";
             formResult.style.color = "#a1a1aa";
 
-            // Your custom formatted message
             let formattedMessage = `
 📝 New Contact Form Submission
 ───────────────────────────────
@@ -91,7 +80,6 @@ ${message}
 📅 Sent on: ${currentDate}
             `;
 
-            // Prepare Form Data
             let formData = new FormData(contactForm);
             formData.set("message", formattedMessage);
             formData.set("subject", "📩 New Contact Form Submission from " + name);
@@ -101,7 +89,6 @@ ${message}
                     method: "POST",
                     body: formData
                 });
-            
                 let result = await response.json();
 
                 if (response.status === 200 && result.success) {
@@ -116,11 +103,8 @@ ${message}
                 formResult.innerHTML = "❌ Network error. Please try again.";
                 formResult.style.color = "#ef4444";
             } finally {
-                // Reset button state
                 submitButton.innerHTML = 'Send Message <i class="fas fa-paper-plane"></i>';
                 submitButton.disabled = false;
-                
-                // Hide message after 5 seconds
                 setTimeout(() => {
                     formResult.style.display = 'none';
                 }, 5000);
@@ -128,123 +112,65 @@ ${message}
         });
     }
 
-    // --- 4. BACK TO TOP BUTTON (Optional) ---
-    const backToTopButton = document.getElementById("backToTop");
-    if (backToTopButton) {
-        window.addEventListener("scroll", function () {
-            if (window.scrollY > 200) {
-                backToTopButton.style.display = "block";
-            } else {
-                backToTopButton.style.display = "none";
-            }
-        });
-
-        backToTopButton.addEventListener("click", function () {
-            window.scrollTo({
-                top: 0,
-                behavior: "smooth"
-            });
-        });
-    }
-});
-
-
-    //  APPLE-STYLE SPOTLIGHT HOVER
-    
+    // --- 4. APPLE-STYLE SPOTLIGHT HOVER ---
     const cards = document.querySelectorAll('.bento-card');
-    
     cards.forEach(card => {
         card.addEventListener('mousemove', e => {
             const rect = card.getBoundingClientRect();
-            // Calculate mouse position relative to the card
             const x = e.clientX - rect.left;
             const y = e.clientY - rect.top;
-            
-            // Set CSS variables for the radial gradient
             card.style.setProperty("--mouse-x", `${x}px`);
             card.style.setProperty("--mouse-y", `${y}px`);
         });
     });
 
-    
-    //  STAGGERED SCROLL ANIMATIONS
-    
+    // --- 5. STAGGERED SCROLL ANIMATIONS ---
     const cardObserver = new IntersectionObserver((entries) => {
-        let delay = 0; // Starts with no delay
-        
+        let delay = 0; 
         entries.forEach((entry) => {
             if (entry.isIntersecting) {
-                // Add the class with a cascading delay
                 setTimeout(() => {
                     entry.target.classList.add('animate-in');
                 }, delay);
-                
-                delay += 100; // Adds 100ms delay to the next card in the row
-                cardObserver.unobserve(entry.target); // Only animate once
+                delay += 100; 
+                cardObserver.unobserve(entry.target); 
             }
         });
     }, { 
-        threshold: 0.1, // Trigger when 10% of the card is visible
-        rootMargin: "0px 0px -50px 0px" // Triggers slightly before the bottom
+        threshold: 0.1, 
+        rootMargin: "0px 0px -50px 0px" 
     });
 
     cards.forEach(card => {
         cardObserver.observe(card);
     });
 
-    
-    //  CONSOLE EASTER EGG
-   
-    console.log(
-        "%cHello fellow developer! \n%cLooking at my code? Let's build something great: smdhanu652@gmail.com",
-        "color: #0ea5e9; font-size: 20px; font-weight: bold; font-family: monospace;",
-        "color: #a1a1aa; font-size: 14px; font-family: monospace;"
-    );
-    
-    console.log(`
-      ██████╗ ██╗  ██╗ █████╗ ███╗   ██╗██╗   ██╗
-      ██╔══██╗██║  ██║██╔══██╗████╗  ██║██║   ██║
-      ██║  ██║███████║███████║██╔██╗ ██║██║   ██║
-      ██║  ██║██╔══██║██╔══██║██║╚██╗██║██║   ██║
-      ██████╔╝██║  ██║██║  ██║██║ ╚████║╚██████╔╝
-      ╚═════╝ ╚═╝  ╚═╝╚═╝  ╚═╝╚═╝  ╚═══╝ ╚═════╝ 
-    `);
-
+    // --- 6. MAGNETIC BUTTONS ---
     const magneticButtons = document.querySelectorAll('.btn');
-
     magneticButtons.forEach(btn => {
         btn.addEventListener('mousemove', function(e) {
             const position = btn.getBoundingClientRect();
-            
-            // FIXED: Using clientX and clientY instead of pageX and pageY
             const x = e.clientX - position.left - position.width / 2;
             const y = e.clientY - position.top - position.height / 2;
-            
-            // Move the button slightly towards the cursor
             btn.style.transform = `translate(${x * 0.3}px, ${y * 0.3}px)`;
         });
 
-        btn.addEventListener('mouseout', function(e) {
-            // Snap back to original position when mouse leaves
+        btn.addEventListener('mouseout', function() {
             btn.style.transform = 'translate(0px, 0px)';
         });
     });
 
-   // ==========================================
-    // CLICK TO EXPAND CERTIFICATES
-    // ==========================================
+    // --- 7. CLICK TO EXPAND CERTIFICATES ---
     const certModal = document.getElementById("cert-modal");
     const fullCertImg = document.getElementById("full-cert-img");
     const closeCertModal = document.querySelector(".close-modal");
 
     if (certModal && fullCertImg && closeCertModal) {
-        // Select the clickable areas
         const certItems = document.querySelectorAll('.cert-item');
-
+        
         certItems.forEach(item => {
             item.style.cursor = 'zoom-in';
             item.addEventListener('click', function() {
-                // Grab the path to the full image from the data attribute
                 const fullImageSrc = this.getAttribute('data-full-cert');
                 if (fullImageSrc) {
                     certModal.style.display = "flex";
@@ -255,24 +181,19 @@ ${message}
             });
         });
 
-        // Close logic
         closeCertModal.onclick = () => certModal.style.display = "none";
         certModal.onclick = (e) => {
             if (e.target !== fullCertImg) certModal.style.display = "none";
         };
     }
 
-    // ==========================================
-    // BACK TO TOP BUTTON LOGIC
-    // ==========================================
+    // --- 8. BACK TO TOP BUTTON (Rocket Launch) ---
     const backToTopButton = document.getElementById("backToTop");
-    let isLaunching = false; // The lock variable
+    let isLaunching = false; 
     
     if (backToTopButton) {
         window.addEventListener("scroll", function () {
-            // If the rocket is currently flying, ignore the scroll completely!
             if (isLaunching) return;
-
             if (window.scrollY > 200) {
                 backToTopButton.style.display = "flex";
             } else {
@@ -281,20 +202,33 @@ ${message}
         });
 
         backToTopButton.addEventListener("click", function () {
-            isLaunching = true; // Lock the button
+            isLaunching = true; 
             backToTopButton.classList.add('btn-launch');
-
             window.scrollTo({
                 top: 0,
                 behavior: "smooth"
             });
-
-            // Wait 1.2 seconds (1200ms) to give the page plenty of time 
-            // to finish its smooth scroll before we reset the rocket.
             setTimeout(() => {
                 backToTopButton.style.display = "none";
                 backToTopButton.classList.remove('btn-launch');
-                isLaunching = false; // Unlock it for next time
+                isLaunching = false; 
             }, 1200); 
         });
     }
+
+    // --- 9. CONSOLE EASTER EGG ---
+    console.log(
+        "%cHello fellow developer! \n%cLooking at my code? Let's build something great: smdhanu652@gmail.com",
+        "color: #0ea5e9; font-size: 20px; font-weight: bold; font-family: monospace;",
+        "color: #a1a1aa; font-size: 14px; font-family: monospace;"
+    );
+    console.log(`
+      ██████╗ ██╗  ██╗ █████╗ ███╗   ██╗██╗   ██╗
+      ██╔══██╗██║  ██║██╔══██╗████╗  ██║██║   ██║
+      ██║  ██║███████║███████║██╔██╗ ██║██║   ██║
+      ██║  ██║██╔══██║██╔══██║██║╚██╗██║██║   ██║
+      ██████╔╝██║  ██║██║  ██║██║ ╚████║╚██████╔╝
+      ╚═════╝ ╚═╝  ╚═╝╚═╝  ╚═╝╚═╝  ╚═══╝ ╚═════╝ 
+    `);
+
+}); // <-- THE ENTIRE SCRIPT IS NOW SAFELY INSIDE THIS BLOCK

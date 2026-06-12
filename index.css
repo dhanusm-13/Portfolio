@@ -676,12 +676,13 @@ body::after {
 .modal-content {
     margin: auto;
     display: block;
-    max-width: 80%;
-    max-height: 80%;
+    width: 90vw;           /* Forces it to take up 90% of screen width */
+    height: 90vh;          /* Forces it to take up 90% of screen height */
+    max-width: 1200px;     /* Prevents it from getting too pixelated on massive monitors */
+    object-fit: contain;   /* Safely scales the image up to fill that space without squishing it */
     border-radius: var(--radius-md);
     cursor: zoom-out;
 }
-
 .close-modal {
     position: absolute;
     top: 20px;
