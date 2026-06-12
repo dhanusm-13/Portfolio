@@ -1,430 +1,258 @@
 document.addEventListener('DOMContentLoaded', function() {
-    // Theme Toggle Functionality
-    const themeToggle = document.getElementById('theme-toggle');
-    const body = document.body;
-    
-    themeToggle.addEventListener('click', () => {
-        body.classList.toggle('dark-mode');
-        body.classList.toggle('light-mode');
-        
-        // Update icon
-        const icon = themeToggle.querySelector('i');
-        if (body.classList.contains('dark-mode')) {
-            icon.classList.replace('fa-sun', 'fa-moon');
-        } else {
-            icon.classList.replace('fa-moon', 'fa-sun');
-        }
-        
-        // Save preference
-        localStorage.setItem('theme', body.classList.contains('dark-mode') ? 'dark' : 'light');
-    });
 
-    // Load saved theme preference
-    const savedTheme = localStorage.getItem('theme');
-    if (savedTheme === 'dark') {
-        body.classList.add('dark-mode');
-        body.classList.remove('light-mode');
-        themeToggle.querySelector('i').classList.replace('fa-sun', 'fa-moon');
+    // --- 1. MOBILE MENU TOGGLE ---
+    const mobileMenuToggle = document.getElementById('mobile-menu-toggle');
+    const navLinks = document.querySelector('.nav-links');
+
+    if (mobileMenuToggle && navLinks) {
+        // Toggle menu open/close when clicking the hamburger icon
+        mobileMenuToggle.addEventListener('click', function() {
+            navLinks.classList.toggle('active');
+        });
+
+        // Close the menu automatically when any link is clicked
+        document.querySelectorAll('.nav-links a').forEach(link => {
+            link.addEventListener('click', () => {
+                navLinks.classList.remove('active');
+            });
+        });
     }
 
-    // Smooth Scrolling for Navigation
+    // --- 2. SMOOTH SCROLLING ---
     document.querySelectorAll('nav a').forEach(anchor => {
         anchor.addEventListener('click', function(e) {
             e.preventDefault();
-            const section = document.querySelector(this.getAttribute('href'));
-            section.scrollIntoView({ behavior: 'smooth' });
-        });
-    });
-
-    // Mobile Menu Toggle
-document.getElementById('mobile-menu-toggle').addEventListener('click', function() {
-    const navUl = document.querySelector('nav ul');
-    navUl.classList.toggle('active');
-});
-
-// Prevent the mobile menu from closing when a nav link is clicked
-document.querySelectorAll('nav ul li a').forEach(link => {
-    link.addEventListener('click', function(event) {
-        // Prevent the default anchor link behavior
-        event.preventDefault();
-
-        // Get the target section from the href attribute
-        const targetId = this.getAttribute('href');
-        const targetSection = document.querySelector(targetId);
-
-        // Smoothly scroll to the target section
-        if (targetSection) {
-            targetSection.scrollIntoView({ behavior: 'smooth' });
-        }
-
-        // Optionally, close the menu after clicking a link (if desired)
-        // Uncomment the following lines if you want the menu to close after clicking a link:
-        const navUl = document.querySelector('nav ul');
-        navUl.classList.remove('active');
-    });
-});
-
-
-
-
-
-    // Education Roadmap Interaction
-    const educationMap = document.getElementById('education-map');
-    const milestones = document.querySelectorAll('.milestone');
-    let isZoomed = false;
-    let currentMilestone = null;
-
-    milestones.forEach((milestone, index) => {
-        // Position milestones along the road
-        const position = (index + 0.7) / (milestones.length + 1);
-        milestone.style.left = `${position * 100}%`;
-        
-        milestone.addEventListener('click', function(e) {
-            e.stopPropagation();
+            const targetId = this.getAttribute('href');
+            const targetSection = document.querySelector(targetId);
             
-            if (currentMilestone === this && isZoomed) {
-                resetZoom();
-            } else {
-                zoomToMilestone(this);
+            if (targetSection) {
+                targetSection.scrollIntoView({ behavior: 'smooth' });
             }
         });
     });
 
-    function updateMilestonePositions() {
-        const isMobile = window.innerWidth <= 480;
-
-        milestones.forEach((milestone, index) => {
-            if (isMobile) {
-                // For mobile (≤480px)
-                milestone.style.position = 'relative';
-                milestone.style.left = 'auto';
-                milestone.style.top = 'auto';
-            } else {
-                // For larger screens, use absolute positioning
-                const gap = 20; // Percentage gap between milestones
-                const totalWidth = 100 - (gap * (milestones.length - 1));
-                const basePosition = (totalWidth / milestones.length) * index;
-                milestone.style.position = 'absolute';
-                milestone.style.left = `${basePosition + (gap * index)}%`;
-                milestone.style.top = '50%';
-                milestone.style.transform = 'translateY(-50%)'; // Center vertically
-            }
-
-            milestone.addEventListener('click', function(e) {
-                e.stopPropagation();
-
-                if (currentMilestone === this && isZoomed) {
-                    resetZoom();
-                } else {
-                    zoomToMilestone(this);
-                }
-            });
-        });
-    }
+    // --- 3. CONTACT FORM (Merged: Validation, Custom Message & No-Redirect) ---
+    const contactForm = document.getElementById('contact-form');
+    const submitButton = document.getElementById('submit-button');
     
-    
-
-    function zoomToMilestone(milestone) {
-        isZoomed = true;
-        currentMilestone = milestone;
-
-        milestones.forEach(m => {
-            m.style.transform = isMobile ? 'scale(0.6)' : 'scale(0.6) translateY(-50%)';
-            m.style.opacity = '0.5';
-        });
-
-        milestone.style.transform = isMobile ? 'scale(1.2)' : 'scale(1.2) translateY(-50%)';
-        milestone.style.opacity = '1';
-
-        const data = milestone.querySelector('.milestone-data');
-        data.style.opacity = '1';
-        data.style.pointerEvents = 'auto';
-
-        if (!isMobile) {
-            const mapRect = educationMap.getBoundingClientRect();
-            const milestoneRect = milestone.getBoundingClientRect();
-            const scrollX = milestoneRect.left - mapRect.left - (mapRect.width / 2) + (milestoneRect.width / 2);
-
-            educationMap.scrollTo({
-                left: educationMap.scrollLeft + scrollX,
-                behavior: 'smooth'
-            });
-        }
+    // Ensure we have a place to show the result message
+    let formResult = document.getElementById('form-result');
+    if (!formResult && contactForm) {
+        formResult = document.createElement('p');
+        formResult.id = 'form-result';
+        formResult.style.marginTop = '1rem';
+        formResult.style.textAlign = 'center';
+        contactForm.appendChild(formResult);
     }
 
-    
-    function resetZoom() {
-        isZoomed = false;
-        currentMilestone = null;
-        
-        milestones.forEach(milestone => {
-            milestone.style.transform = isMobile?'scale(1)':'scale(1) translateY(-50%)';
-            milestone.style.opacity = '1';
-            const data = milestone.querySelector('.milestone-data');
-            data.style.opacity = '0';
-            data.style.pointerEvents = 'none';
-        });
-    }
+    if (contactForm) {
+        contactForm.addEventListener('submit', async function(e) {
+            e.preventDefault(); // Stop standard redirect
 
-    
-
-    // Certificates Slider
-    const certificatesSlider = document.querySelector('.certificates-slider');
-    const prevBtn = document.querySelector('.scroll-btn.prev');
-    const nextBtn = document.querySelector('.scroll-btn.next');
-    
-    prevBtn.addEventListener('click', () => {
-        certificatesSlider.scrollBy({ left: -300, behavior: 'smooth' });
-    });
-
-    nextBtn.addEventListener('click', () => {
-        certificatesSlider.scrollBy({ left: 300, behavior: 'smooth' });
-    });
-
-    let isScrolling = false;
-    let startX;
-    let scrollLeft;
-
-    certificatesSlider.addEventListener('mousedown', (e) => {
-        isScrolling = true;
-        startX = e.pageX - certificatesSlider.offsetLeft;
-        scrollLeft = certificatesSlider.scrollLeft;
-    });
-
-    certificatesSlider.addEventListener('mouseleave', () => isScrolling = false);
-    certificatesSlider.addEventListener('mouseup', () => isScrolling = false);
-    certificatesSlider.addEventListener('mousemove', (e) => {
-        if (!isScrolling) return;
-        e.preventDefault();
-        const x = e.pageX - certificatesSlider.offsetLeft;
-        const walk = (x - startX) * 2;
-        certificatesSlider.scrollLeft = scrollLeft - walk;
-    });
-        //Expand an shrink Certificate
-        const certificates = document.querySelectorAll(".certificate-card img");
-    
-        certificates.forEach((img) => {
-            img.addEventListener("click", function () {
-                if (this.classList.contains("fullscreen")) {
-                    this.classList.remove("fullscreen"); // Shrink back
-                } else {
-                    removeFullscreen(); // Ensure only one image expands at a time
-                    this.classList.add("fullscreen"); // Expand
-                }
-            });
-        });
-    
-        function removeFullscreen() {
-            certificates.forEach((img) => img.classList.remove("fullscreen"));
-        }
-    
-
-
-    // Contact Form Handling with Validation
-        document.getElementById("contact-form").addEventListener("submit", async function(event) {
-            event.preventDefault(); // Prevent default submission
-        
-            let name = document.getElementById("name").value.trim();
-            let email = document.getElementById("email").value.trim();
-            let message = document.getElementById("message").value.trim();
-            let formResponse = document.getElementById("form-response");
+            // Grab inputs
+            let nameInput = contactForm.querySelector('input[name="name"]');
+            let emailInput = contactForm.querySelector('input[name="email"]');
+            let messageInput = contactForm.querySelector('textarea[name="message"]');
+            
+            let name = nameInput ? nameInput.value.trim() : "";
+            let email = emailInput ? emailInput.value.trim() : "";
+            let message = messageInput ? messageInput.value.trim() : "";
             let currentDate = new Date().toLocaleDateString("en-US");
-        
-            // Clear previous error messages
-            document.getElementById("name-error").textContent = "";
-            document.getElementById("email-error").textContent = "";
-            document.getElementById("message-error").textContent = "";
-            formResponse.textContent = "";
-        
-            let valid = true;
-        
-            // Validation
-            if (name === "") {
-                document.getElementById("name-error").textContent = "Name is required.";
-                valid = false;
+
+            // Basic validation
+            if (!name || !email || !message) {
+                formResult.style.display = 'block';
+                formResult.innerHTML = "❌ Please fill out all fields.";
+                formResult.style.color = "#ef4444";
+                return;
             }
-        
-            let emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-            if (email === "") {
-                document.getElementById("email-error").textContent = "Email is required.";
-                valid = false;
-            } else if (!emailPattern.test(email)) {
-                document.getElementById("email-error").textContent = "Enter a valid email address.";
-                valid = false;
-            }
-        
-            if (message === "") {
-                document.getElementById("message-error").textContent = "Message is required.";
-                valid = false;
-            }
-        
-            if (!valid) return; // Stop submission if validation fails
-        
-            // Format the custom message
+
+            // Show loading state
+            submitButton.innerHTML = 'Sending... <i class="fas fa-spinner fa-spin"></i>';
+            submitButton.disabled = true;
+            formResult.style.display = 'block';
+            formResult.innerHTML = "Sending message...";
+            formResult.style.color = "#a1a1aa";
+
+            // Your custom formatted message
             let formattedMessage = `
-        📝 New Contact Form Submission
-        ───────────────────────────────
-        📌 Name: ${name}
-
-        📧 Email: ${email}
-        
-        ✉️ Message: 
-        ${message}
-        ───────────────────────────────
-        📅 Sent on: ${currentDate}
+📝 New Contact Form Submission
+───────────────────────────────
+📌 Name: ${name}
+📧 Email: ${email}
+✉️ Message: 
+${message}
+───────────────────────────────
+📅 Sent on: ${currentDate}
             `;
-        
-            // Set custom message in hidden field
-            document.getElementById("formatted-message").value = formattedMessage;
-        
-            // Prepare form data
-            let formData = new FormData();
-            formData.append("access_key", "cabee0a5-0e77-4b3e-9ad9-e72ebb6e13db");
-            formData.append("subject", "📩 New Contact Form Submission");
-            formData.append("message", formattedMessage);
-        
-            // Send form data using fetch API
-            let response = await fetch("https://api.web3forms.com/submit", {
-                method: "POST",
-                body: formData
-            });
-        
-            let result = await response.json();
-        
-            // Display response message
-            if (result.success) {
-                formResponse.style.color = "green";
-                formResponse.textContent = "✅ Thank you! Your message has been sent.";
-                this.reset(); // Clear the form after submition
-            } else {
-                formResponse.style.color = "red";
-                formResponse.textContent = "❌ Oops! Something went wrong. Please try again.";
-            }
-        });
 
-    // Typing Animation for About Section
-    const typewriterText = document.querySelector('.typewriter');
-    const text = typewriterText.textContent;
-    typewriterText.textContent = '';
+            // Prepare Form Data
+            let formData = new FormData(contactForm);
+            formData.set("message", formattedMessage);
+            formData.set("subject", "📩 New Contact Form Submission from " + name);
 
-    let charIndex = 0;
-    function typeWriter() {
-        if (charIndex < text.length) {
-            typewriterText.textContent += text.charAt(charIndex);
-            charIndex++;
-            setTimeout(typeWriter, 100);
-        }
-    }
-
-    const observer = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                typeWriter();
-                observer.unobserve(entry.target);
-            }
-        });
-    });
-
-    observer.observe(document.querySelector('#about'));
-
-}); // This correctly closes the event listener
-
-document.addEventListener("DOMContentLoaded", function () {
-    const backToTopButton = document.getElementById("backToTop");
-
-    // Show the button when scrolling down
-    window.addEventListener("scroll", function () {
-        if (window.scrollY > 200) {
-            backToTopButton.style.display = "block";
-        } else {
-            backToTopButton.style.display = "none";
-        }
-    });
-
-    // Scroll to the top when clicking the button
-    backToTopButton.addEventListener("click", function () {
-        window.scrollTo({
-            top: 0,
-            behavior: "smooth"
-        });
-    });
-});
-
-// Add this to your index.js file
-
-// document.addEventListener('DOMContentLoaded', function() {
-//     // Function to check if element is in viewport
-//     function isInViewport(element) {
-//         const rect = element.getBoundingClientRect();
-//         return (
-//             rect.top <= (window.innerHeight || document.documentElement.clientHeight) * 0.8 &&
-//             rect.bottom >= 0
-//         );
-//     }
-
-//     // Function to animate education timeline
-//     function animateEducation() {
-//         const educationSection = document.getElementById('education');
-//         const road = document.querySelector('.road');
-//         const milestones = document.querySelectorAll('.milestone');
-        
-//         if (isInViewport(educationSection)) {
-//             // Animate the road first
-//             road.classList.add('animate');
+            try {
+                let response = await fetch("https://api.web3forms.com/submit", {
+                    method: "POST",
+                    body: formData
+                });
             
-//             // Then animate each milestone with a slight delay
-//             setTimeout(() => {
-//                 milestones.forEach(milestone => {
-//                     milestone.classList.add('animate');
-//                 });
-//             }, 500); // 500ms delay after road animation starts
-            
-//             // Remove scroll event listener once animation is triggered
-//             window.removeEventListener('scroll', animateEducation);
-//         }
-//     }
+                let result = await response.json();
 
-//     // Initial check on page load
-//     animateEducation();
-    
-//     // Listen for scroll events to trigger animation
-//     window.addEventListener('scroll', animateEducation);
-// });
-/* ==========================================
-   UPDATED: Education Scroll Animation
-   (Replaces the old animateEducation function)
-   ========================================== */
-document.addEventListener('DOMContentLoaded', function() {
-    const educationSection = document.getElementById('education');
-    const road = document.querySelector('.road');
-    const milestones = document.querySelectorAll('.milestone');
-
-    // Use IntersectionObserver (Better performance than window.onscroll)
-    const observer = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-            // When the section comes into view...
-            if (entry.isIntersecting) {
+                if (response.status === 200 && result.success) {
+                    formResult.innerHTML = "✅ Message sent successfully!";
+                    formResult.style.color = "#2dd4bf";
+                    contactForm.reset();
+                } else {
+                    formResult.innerHTML = "❌ " + (result.message || "Something went wrong.");
+                    formResult.style.color = "#ef4444";
+                }
+            } catch (error) {
+                formResult.innerHTML = "❌ Network error. Please try again.";
+                formResult.style.color = "#ef4444";
+            } finally {
+                // Reset button state
+                submitButton.innerHTML = 'Send Message <i class="fas fa-paper-plane"></i>';
+                submitButton.disabled = false;
                 
-                // 1. Trigger Mobile Animation (matches your new CSS)
-                educationSection.classList.add('view-active');
-
-                // 2. Trigger Desktop Animation (matches your existing CSS)
-                if (road) road.classList.add('animate');
-                
+                // Hide message after 5 seconds
                 setTimeout(() => {
-                    milestones.forEach(milestone => {
-                        milestone.classList.add('animate');
-                    });
-                }, 500);
-
-                // Stop observing (run only once)
-                observer.unobserve(entry.target);
+                    formResult.style.display = 'none';
+                }, 5000);
             }
         });
-    }, { threshold: 0.1 }); // Trigger when 10% of the section is visible
+    }
 
-    if (educationSection) {
-        observer.observe(educationSection);
+    // --- 4. BACK TO TOP BUTTON (Optional) ---
+    const backToTopButton = document.getElementById("backToTop");
+    if (backToTopButton) {
+        window.addEventListener("scroll", function () {
+            if (window.scrollY > 200) {
+                backToTopButton.style.display = "block";
+            } else {
+                backToTopButton.style.display = "none";
+            }
+        });
+
+        backToTopButton.addEventListener("click", function () {
+            window.scrollTo({
+                top: 0,
+                behavior: "smooth"
+            });
+        });
     }
 });
 
+
+    //  APPLE-STYLE SPOTLIGHT HOVER
+    
+    const cards = document.querySelectorAll('.bento-card');
+    
+    cards.forEach(card => {
+        card.addEventListener('mousemove', e => {
+            const rect = card.getBoundingClientRect();
+            // Calculate mouse position relative to the card
+            const x = e.clientX - rect.left;
+            const y = e.clientY - rect.top;
+            
+            // Set CSS variables for the radial gradient
+            card.style.setProperty("--mouse-x", `${x}px`);
+            card.style.setProperty("--mouse-y", `${y}px`);
+        });
+    });
+
+    
+    //  STAGGERED SCROLL ANIMATIONS
+    
+    const cardObserver = new IntersectionObserver((entries) => {
+        let delay = 0; // Starts with no delay
+        
+        entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+                // Add the class with a cascading delay
+                setTimeout(() => {
+                    entry.target.classList.add('animate-in');
+                }, delay);
+                
+                delay += 100; // Adds 100ms delay to the next card in the row
+                cardObserver.unobserve(entry.target); // Only animate once
+            }
+        });
+    }, { 
+        threshold: 0.1, // Trigger when 10% of the card is visible
+        rootMargin: "0px 0px -50px 0px" // Triggers slightly before the bottom
+    });
+
+    cards.forEach(card => {
+        cardObserver.observe(card);
+    });
+
+    
+    //  CONSOLE EASTER EGG
+   
+    console.log(
+        "%cHello fellow developer! \n%cLooking at my code? Let's build something great: smdhanu652@gmail.com",
+        "color: #0ea5e9; font-size: 20px; font-weight: bold; font-family: monospace;",
+        "color: #a1a1aa; font-size: 14px; font-family: monospace;"
+    );
+    
+    console.log(`
+      ██████╗ ██╗  ██╗ █████╗ ███╗   ██╗██╗   ██╗
+      ██╔══██╗██║  ██║██╔══██╗████╗  ██║██║   ██║
+      ██║  ██║███████║███████║██╔██╗ ██║██║   ██║
+      ██║  ██║██╔══██║██╔══██║██║╚██╗██║██║   ██║
+      ██████╔╝██║  ██║██║  ██║██║ ╚████║╚██████╔╝
+      ╚═════╝ ╚═╝  ╚═╝╚═╝  ╚═╝╚═╝  ╚═══╝ ╚═════╝ 
+    `);
+
+    const magneticButtons = document.querySelectorAll('.btn');
+
+    magneticButtons.forEach(btn => {
+        btn.addEventListener('mousemove', function(e) {
+            const position = btn.getBoundingClientRect();
+            
+            // FIXED: Using clientX and clientY instead of pageX and pageY
+            const x = e.clientX - position.left - position.width / 2;
+            const y = e.clientY - position.top - position.height / 2;
+            
+            // Move the button slightly towards the cursor
+            btn.style.transform = `translate(${x * 0.3}px, ${y * 0.3}px)`;
+        });
+
+        btn.addEventListener('mouseout', function(e) {
+            // Snap back to original position when mouse leaves
+            btn.style.transform = 'translate(0px, 0px)';
+        });
+    });
+
+   // ==========================================
+    // CLICK TO EXPAND CERTIFICATES
+    // ==========================================
+    const certModal = document.getElementById("cert-modal");
+    const fullCertImg = document.getElementById("full-cert-img");
+    const closeCertModal = document.querySelector(".close-modal");
+
+    if (certModal && fullCertImg && closeCertModal) {
+        // Select the clickable areas
+        const certItems = document.querySelectorAll('.cert-item');
+
+        certItems.forEach(item => {
+            item.style.cursor = 'zoom-in';
+            item.addEventListener('click', function() {
+                // Grab the path to the full image from the data attribute
+                const fullImageSrc = this.getAttribute('data-full-cert');
+                if (fullImageSrc) {
+                    certModal.style.display = "flex";
+                    certModal.style.alignItems = "center";
+                    certModal.style.justifyContent = "center";
+                    fullCertImg.src = fullImageSrc;
+                }
+            });
+        });
+
+        // Close logic
+        closeCertModal.onclick = () => certModal.style.display = "none";
+        certModal.onclick = (e) => {
+            if (e.target !== fullCertImg) certModal.style.display = "none";
+        };
+    }
