@@ -24,6 +24,17 @@
     box-sizing: border-box;
 }
 
+/* --- REMOVE DEFAULT BROWSER CLICK HIGHLIGHTS --- */
+a, button {
+    /* Removes the blue flash on mobile devices */
+    -webkit-tap-highlight-color: transparent; 
+}
+
+a:focus, button:focus {
+    /* Removes the default focus box on desktop */
+    outline: none; 
+}
+
 body {
     font-family: 'Inter', sans-serif;
     background-color: var(--bg-dark);
@@ -452,8 +463,6 @@ footer {
 @media (max-width: 768px) {
     /* Mobile Menu Toggle */
     #mobile-menu-toggle { display: block; }
-
-    /* --- MOBILE MENU ICON ANIMATION --- */
     
     /* 1. Set the transition speed for the lines */
     #mobile-menu-toggle line {
@@ -723,7 +732,7 @@ body::after {
 /* Mobile adjustment */
 @media (max-width: 768px) {
     #backToTop {
-        bottom: 20px;
+        bottom: 50px;
         right: 20px;
         width: 45px;
         height: 45px;
