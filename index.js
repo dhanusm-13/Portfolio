@@ -17,6 +17,40 @@ document.addEventListener('DOMContentLoaded', function() {
             });
         });
     }
+    // --- THEME TOGGLE LOGIC ---
+    const themeToggle = document.getElementById('theme-toggle');
+    const themeIcon = themeToggle.querySelector('i');
+    const body = document.body;
+
+    // 1. Check if the user previously saved a theme preference
+    const savedTheme = localStorage.getItem('portfolio-theme');
+    
+    // 2. Apply the saved theme immediately on load
+    if (savedTheme === 'light') {
+        body.classList.replace('dark-theme', 'light-theme');
+        themeIcon.classList.replace('fa-sun', 'fa-moon'); // Change to moon icon
+    }
+
+    // 3. Handle the click event
+    if (themeToggle) {
+        themeToggle.addEventListener('click', () => {
+            // Give the button a little spin animation on click
+            themeToggle.style.transform = 'rotate(360deg)';
+            setTimeout(() => themeToggle.style.transform = 'rotate(0deg)', 300);
+
+            if (body.classList.contains('dark-theme')) {
+                // Switch to Light
+                body.classList.replace('dark-theme', 'light-theme');
+                themeIcon.classList.replace('fa-sun', 'fa-moon');
+                localStorage.setItem('portfolio-theme', 'light');
+            } else {
+                // Switch to Dark
+                body.classList.replace('light-theme', 'dark-theme');
+                themeIcon.classList.replace('fa-moon', 'fa-sun');
+                localStorage.setItem('portfolio-theme', 'dark');
+            }
+        });
+    }
 
     // --- 2. SMOOTH SCROLLING ---
     document.querySelectorAll('nav a').forEach(anchor => {
@@ -112,18 +146,22 @@ ${message}
         });
     }
 
-    // --- 4. APPLE-STYLE SPOTLIGHT HOVER ---
+    // --- 4. APPLE-STYLE SPOTLIGHT HOVER (OPTIMIZED) ---
     const cards = document.querySelectorAll('.bento-card');
     cards.forEach(card => {
         card.addEventListener('mousemove', e => {
+            // Check if this card has the spotlight effect (some might not need it)
             const rect = card.getBoundingClientRect();
             const x = e.clientX - rect.left;
             const y = e.clientY - rect.top;
-            card.style.setProperty("--mouse-x", `${x}px`);
-            card.style.setProperty("--mouse-y", `${y}px`);
+            
+            // Only update CSS variables for the specific card being hovered
+            requestAnimationFrame(() => {
+                card.style.setProperty("--mouse-x", `${x}px`);
+                card.style.setProperty("--mouse-y", `${y}px`);
+            });
         });
     });
-
     // --- 5. STAGGERED SCROLL ANIMATIONS ---
     const cardObserver = new IntersectionObserver((entries) => {
         let delay = 0; 
@@ -231,4 +269,36 @@ ${message}
       ╚═════╝ ╚═╝  ╚═╝╚═╝  ╚═╝╚═╝  ╚═══╝ ╚═════╝ 
     `);
 
-}); // <-- THE ENTIRE SCRIPT IS NOW SAFELY INSIDE THIS BLOCK
+}); 
+
+// --- 10. SCROLL PROGRESS BAR ---
+    const progressBar = document.getElementById('scroll-progress');
+    if (progressBar) {
+        window.addEventListener('scroll', () => {
+            const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+            const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+            const scrolled = (winScroll / height) * 100;
+            progressBar.style.width = scrolled + "%";
+        });
+    }
+
+// --- 11. TYPEWRITER EFFECT ---
+    const textToType = "Software Developer & AI Enthusiast";
+    const typewriterElement = document.getElementById('typewriter');
+    
+    if (typewriterElement) {
+        let i = 0;
+        
+        // Wait 1 second to let the CSS slide-up animation finish first
+        setTimeout(() => {
+            function type() {
+                if (i < textToType.length) {
+                    typewriterElement.innerHTML += textToType.charAt(i);
+                    i++;
+                    
+                    setTimeout(type, Math.random() * 50 + 40); 
+                }
+            }
+            type();
+        }, 1000); 
+    }

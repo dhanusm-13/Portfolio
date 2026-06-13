@@ -1,9 +1,21 @@
 /* --- PREMIUM BENTO BOX THEME --- */
 :root {
     /* Color Palette */
-    --bg-dark: #09090b; /* Deep almost-black */
-    --card-bg: #18181b; /* Subtle contrast for cards */
+    --bg-dark: #09090b; 
+    --card-bg: #18181b; 
     --card-border: rgba(255, 255, 255, 0.08);
+    
+    
+    --surface-color: rgba(255, 255, 255, 0.03); 
+    --surface-hover: rgba(255, 255, 255, 0.08);
+    --menu-bg: rgba(9, 9, 11, 0.98); 
+    --nav-bg: rgba(9, 9, 11, 0.8);
+    --scrollbar-thumb: #27272a;
+
+    --hover-border: rgba(14, 165, 233, 0.4);
+    --hover-pill-bg: rgba(14, 165, 233, 0.1);
+    --hover-shadow: 0 10px 30px rgba(14, 165, 233, 0.2);
+    
     --text-primary: #fafafa;
     --text-secondary: #a1a1aa;
     
@@ -18,6 +30,31 @@
     --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
+/* --- LIGHT THEME VARIABLES --- */
+body.light-theme {
+    --bg-dark: #f8fafc;       
+    --card-bg: #ffffff;       
+    --card-border: rgba(0, 0, 0, 0.08); 
+    
+    /* Darkens the transparent boxes so they are visible on white cards */
+    --surface-color: rgba(0, 0, 0, 0.03); 
+    --surface-hover: rgba(0, 0, 0, 0.06);
+    
+
+    /* Sophisticated Slate Hovers for Light Mode */
+    --hover-border: rgba(15, 23, 42, 0.2); 
+    --hover-pill-bg: rgba(15, 23, 42, 0.05);
+    --hover-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+    /* Syncs the menu backgrounds perfectly */
+    --menu-bg: rgba(248, 250, 252, 0.98); 
+    --nav-bg: rgba(248, 250, 252, 0.8);
+    --scrollbar-thumb: #cbd5e1;
+    
+    --text-primary: #0f172a;  
+    --text-secondary: #64748b; 
+    --accent-glow: rgba(14, 165, 233, 0.15); 
+}
+
 * {
     margin: 0;
     padding: 0;
@@ -26,12 +63,10 @@
 
 /* --- REMOVE DEFAULT BROWSER CLICK HIGHLIGHTS --- */
 a, button {
-    /* Removes the blue flash on mobile devices */
     -webkit-tap-highlight-color: transparent; 
 }
 
 a:focus, button:focus {
-    /* Removes the default focus box on desktop */
     outline: none; 
 }
 
@@ -43,7 +78,6 @@ body {
     overflow-x: hidden;
 }
 
-/* Typography Headings */
 h1, h2, h3, h4 {
     font-family: 'Space Grotesk', sans-serif;
     color: var(--text-primary);
@@ -64,7 +98,7 @@ h1, h2, h3, h4 {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    background: rgba(9, 9, 11, 0.8);
+    background: var(--nav-bg);
     backdrop-filter: blur(12px);
     z-index: 1000;
     border-bottom: 1px solid var(--card-border);
@@ -98,7 +132,7 @@ h1, h2, h3, h4 {
     display: none;
     background: none;
     border: none;
-    color: white;
+    color: var(--text-primary); /* FIXED: Uses variable instead of white */
     font-size: 1.5rem;
     cursor: pointer;
 }
@@ -110,14 +144,8 @@ h1, h2, h3, h4 {
     padding: 6rem 2rem 2rem;
 }
 
-.section-padding {
-    padding: 2.5rem 0;
-}
-
-.section-title {
-    font-size: 2rem;
-    margin-bottom: 1rem;
-}
+.section-padding { padding: 2.5rem 0; }
+.section-title { font-size: 2rem; margin-bottom: 1rem; }
 
 .bento-grid {
     display: grid;
@@ -126,8 +154,7 @@ h1, h2, h3, h4 {
     grid-auto-rows: minmax(200px, auto);
 }
 
-/* --- BENTO CARDS (The Magic) --- */
-/* --- BENTO CARDS (The Magic) --- */
+/* --- BENTO CARDS --- */
 .bento-card {
     background: var(--card-bg);
     border: 1px solid var(--card-border);
@@ -139,13 +166,10 @@ h1, h2, h3, h4 {
     transition: var(--transition);
     overflow: hidden;
     position: relative;
-    
-    /* ADDED FOR STAGGERED ANIMATION */
     opacity: 0; 
     transform: translateY(30px);
 }
 
-/* ADDED FOR SPOTLIGHT HOVER EFFECT */
 .bento-card::before {
     content: "";
     position: absolute;
@@ -164,205 +188,97 @@ h1, h2, h3, h4 {
     z-index: 0;
 }
 
-.bento-card:hover::before {
-    opacity: 1;
-}
+.bento-card:hover::before { opacity: 1; }
+.bento-card > * { position: relative; z-index: 1; }
 
-/* Keeps text/images above the spotlight glow */
-.bento-card > * {
-    position: relative;
-    z-index: 1;
-}
-
-/* ADDED FOR STAGGERED ANIMATION (Visible State) */
-.bento-card.animate-in {
-    opacity: 1;
-    transform: translateY(0);
-}
-
-/* The standard hover lift (only applies AFTER it animates in) */
-.bento-card.animate-in:hover {
+.bento-card.animate-in { opacity: 1; transform: translateY(0); }
+.bento-card.animate-in:hover, .bento-card:hover {
     transform: translateY(-5px);
-    border-color: rgba(14, 165, 233, 0.4);
-    box-shadow: 0 10px 30px var(--accent-glow);
+    border-color: var(--hover-border);
+    box-shadow: var(--hover-shadow);
 }
 
-.bento-card:hover {
-    transform: translateY(-5px);
-    border-color: rgba(14, 165, 233, 0.4);
-    box-shadow: 0 10px 30px var(--accent-glow);
-}
-
-/* Grid Utilities */
 .col-span-2 { grid-column: span 2; }
 .col-span-3 { grid-column: span 3; }
 .row-span-2 { grid-row: span 2; }
 
 /* --- HERO CARD --- */
-.hero-card {
-    justify-content: center;
-}
+.hero-card { justify-content: center; }
 .hero-avatar {
-    width: 80px;
-    height: 80px;
-    border-radius: 50%;
-    margin-bottom: 1rem;
-    border: 2px solid var(--accent-color);
+    width: 80px; height: 80px; border-radius: 50%;
+    margin-bottom: 1rem; border: 2px solid var(--accent-color);
 }
-.hero-card h1 {
-    font-size: 3.5rem;
-    line-height: 1.1;
-    margin-bottom: 0.5rem;
-}
-.tagline {
-    font-size: 1.2rem;
-    color: var(--text-secondary);
-    margin-bottom: 1.5rem;
-}
-.bio {
-    color: var(--text-secondary);
-    font-size: 1rem;
-    max-width: 90%;
-}
+.hero-card h1 { font-size: 3.5rem; line-height: 1.1; margin-bottom: 0.5rem; }
+.tagline { font-size: 1.2rem; color: var(--text-secondary); margin-bottom: 1.5rem; }
+.bio { color: var(--text-secondary); font-size: 1rem; max-width: 90%; }
 
-/* Buttons */
 .action-links { display: flex; gap: 1rem; margin-top: 2rem; }
 .btn {
-    padding: 0.8rem 1.5rem;
-    border-radius: var(--radius-md);
-    text-decoration: none;
-    font-weight: 500;
-    transition: transform 0.3s ease-out;
-    font-size: 0.9rem;
-    border: none;
-    cursor: pointer;
-    display: inline-flex;
-    align-items: center;
-    gap: 0.5rem;
+    padding: 0.8rem 1.5rem; border-radius: var(--radius-md); text-decoration: none;
+    font-weight: 500; transition: transform 0.3s ease-out; font-size: 0.9rem;
+    border: none; cursor: pointer; display: inline-flex; align-items: center; gap: 0.5rem;
 }
-.btn-primary {
-    background: var(--text-primary);
-    color: var(--bg-dark);
-}
-.btn-primary:hover {
-    background: #e4e4e7;
-    transform: scale(1.02);
-}
-.btn-secondary {
-    background: rgba(255, 255, 255, 0.05);
-    color: var(--text-primary);
-    border: 1px solid var(--card-border);
-}
-.btn-secondary:hover {
-    background: rgba(255, 255, 255, 0.1);
-}
+.btn-primary { background: var(--text-primary); color: var(--bg-dark); }
+.btn-primary:hover { background: #e4e4e7; transform: scale(1.02); }
+.btn-secondary { background: var(--surface-color); color: var(--text-primary); border: 1px solid var(--card-border); }
+.btn-secondary:hover { background: var(--surface-hover); }
 
 /* --- ABOUT & SKILLS --- */
 .about-card h3 { margin-bottom: 1rem; color: var(--accent-color); font-family: monospace;}
 .about-card p { color: var(--text-secondary); }
 
-.pill-group {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.8rem;
-    margin-top: 1rem;
-}
+.pill-group { display: flex; flex-wrap: wrap; gap: 0.8rem; margin-top: 1rem; }
 .pill {
-    background: rgba(255, 255, 255, 0.03);
+    background: var(--surface-color); /* FIXED */
     border: 1px solid var(--card-border);
-    padding: 0.5rem 1rem;
-    border-radius: 50px;
-    font-size: 0.85rem;
-    color: var(--text-secondary);
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
+    padding: 0.5rem 1rem; border-radius: 50px; font-size: 0.85rem;
+    color: var(--text-secondary); display: flex; align-items: center; gap: 0.5rem;
 }
 .pill:hover {
-    background: rgba(14, 165, 233, 0.1);
+    background: var(--hover-pill-bg); 
     border-color: var(--accent-color);
-    transform: translateY(-2px);
-    box-shadow: 0 4px 12px rgba(14, 165, 233, 0.2);
+    transform: translateY(-2px); 
+    box-shadow: var(--hover-shadow);
 }
-.bento-card:hover .pill { border-color: rgba(255,255,255,0.1); color: var(--text-primary); }
+.bento-card:hover .pill { border-color: var(--surface-hover); color: var(--text-primary); }
 
 /* --- PROJECTS --- */
-.project-card {
-    padding: 0; /* Remove padding to let image bleed to edges */
-    grid-column: span 2; /* 2 projects per row on desktop */
-}
-.project-media {
-    width: 100%;
-    height: 220px;
-    background: #000;
-    overflow: hidden;
-}
+.project-card { padding: 0; grid-column: span 2; }
+.project-media { width: 100%; height: 220px; background: #000; overflow: hidden; }
 .project-media img, .project-media video {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    opacity: 0.8;
-    transition: var(--transition);
+    width: 100%; height: 100%; object-fit: cover; opacity: 0.8; transition: var(--transition);
 }
 .project-card:hover .project-media img { opacity: 1; transform: scale(1.02); }
-
-.project-info {
-    padding: 1.5rem;
-    display: flex;
-    flex-direction: column;
-    flex-grow: 1;
-}
+.project-info { padding: 1.5rem; display: flex; flex-direction: column; flex-grow: 1; }
 .project-info h3 { margin-bottom: 0.5rem; }
 .project-info p { color: var(--text-secondary); font-size: 0.9rem; margin-bottom: 1.5rem; flex-grow: 1;}
-.project-links a {
-    color: var(--text-primary);
-    text-decoration: none;
-    font-size: 0.9rem;
-    font-weight: 500;
-}
+.project-links a { color: var(--text-primary); text-decoration: none; font-size: 0.9rem; font-weight: 500; }
 .project-links a:hover { color: var(--accent-color); }
 
 /* --- EDUCATION TIMELINE --- */
 .timeline-card { justify-content: flex-start; }
-.timeline-item {
-    position: relative;
-    padding-left: 2rem;
-    margin-bottom: 1.5rem;
-    border-left: 2px solid var(--card-border);
-}
+.timeline-item { position: relative; padding-left: 2rem; margin-bottom: 1.5rem; border-left: 2px solid var(--card-border); }
 .timeline-item:last-child { margin-bottom: 0; border-left-color: transparent;}
-.timeline-dot {
-    position: absolute;
-    left: -6px;
-    top: 0;
-    width: 10px;
-    height: 10px;
-    border-radius: 50%;
-    background: var(--accent-color);
-}
+.timeline-dot { position: absolute; left: -6px; top: 0; width: 10px; height: 10px; border-radius: 50%; background: var(--accent-color); }
 .timeline-item h4 { margin-bottom: 0.2rem; }
 .timeline-date { font-size: 0.8rem; color: var(--accent-color); font-family: monospace; display: block; margin-bottom: 0.5rem;}
 .timeline-item p { color: var(--text-secondary); font-size: 0.9rem;}
 
 /* --- CERTIFICATIONS --- */
-.certs-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 1rem;
-    height: 100%;
-}
+.certs-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; height: 100%; overflow: hidden; }
 .cert-item {
-    background: rgba(255,255,255,0.02);
-    padding: 1rem;
-    border-radius: var(--radius-md);
-    font-size: 0.85rem;
-    color: var(--text-secondary);
-    display: flex;
-    align-items: center;
-    gap: 0.8rem;
+    background: var(--surface-color); /* FIXED */
+    padding: 0.8rem; border-radius: var(--radius-md); font-size: 0.85rem;
+    color: var(--text-secondary); display: flex; align-items: center; gap: 12px;
     border: 1px solid var(--card-border);
 }
 .cert-item i { color: var(--accent-color); font-size: 1.2rem;}
+.cert-item img {
+    width: 35px !important; height: 35px !important; min-width: 35px !important;
+    max-width: 35px !important; object-fit: contain !important;
+    flex-shrink: 0 !important; border-radius: 4px; cursor: zoom-in;
+}
+.cert-item span { white-space: normal; word-break: break-word; line-height: 1.3; }
 
 /* --- PUBLICATIONS --- */
 .pub-card { grid-column: span 2;}
@@ -373,85 +289,47 @@ h1, h2, h3, h4 {
 .contact-info-card { grid-column: span 2;}
 .contact-methods { display: flex; flex-direction: column; gap: 1rem; margin-top: 1.5rem;}
 .contact-methods a, .contact-methods span {
-    color: var(--text-secondary);
-    text-decoration: none;
-    font-size: 0.9rem;
-    display: flex;
-    align-items: center;
-    gap: 0.8rem;
+    color: var(--text-secondary); text-decoration: none; font-size: 0.9rem;
+    display: flex; align-items: center; gap: 0.8rem;
 }
 .contact-methods a:hover { color: var(--accent-color); }
 
 form { display: flex; flex-direction: column; gap: 1rem; height: 100%; justify-content: center;}
 .form-row { display: flex; gap: 1rem; }
 input, textarea {
-    width: 100%;
-    padding: 1rem;
-    background: rgba(255,255,255,0.03);
-    border: 1px solid var(--card-border);
-    border-radius: var(--radius-md);
-    color: var(--text-primary);
-    font-family: inherit;
-    transition: var(--transition);
+    width: 100%; padding: 1rem; 
+    background: var(--surface-color); /* FIXED */
+    border: 1px solid var(--card-border); border-radius: var(--radius-md);
+    color: var(--text-primary); font-family: inherit; transition: var(--transition);
 }
 input:focus, textarea:focus {
-    outline: none;
-    border-color: var(--accent-color);
-    background: rgba(255,255,255,0.05);
+    outline: none; border-color: var(--accent-color); 
+    background: var(--surface-hover); /* FIXED */
 }
 
-footer {
-    text-align: center;
-    padding: 2rem;
-    color: var(--text-secondary);
-    font-size: 0.9rem;
-    border-top: 1px solid var(--card-border);
-    margin-top: 1rem;
+footer { text-align: center; padding: 2rem; color: var(--text-secondary); font-size: 0.9rem; border-top: 1px solid var(--card-border); margin-top: 1rem; }
+
+.menu-curve { display: none; }
+
+/* --- SCROLL PROGRESS BAR --- */
+#scroll-progress {
+    position: fixed; top: 0; left: 0; width: 0%; height: 3px; background: var(--gradient);
+    z-index: 9999; box-shadow: 0 0 10px var(--accent-color);
 }
 
-/* --- BULLETPROOF CERTIFICATE THUMBNAILS --- */
-.certs-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 1rem;
-    overflow: hidden; /* Prevents anything from breaking out */
+/* --- TYPEWRITER CURSOR --- */
+.blinking-cursor {
+    font-weight: 400; color: var(--accent-color); margin-left: 2px; animation: blinkTextCursor 0.8s step-end infinite;
 }
+@keyframes blinkTextCursor { 0%, 100% { opacity: 1; } 50% { opacity: 0; } }
 
-.cert-item {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    background: rgba(255, 255, 255, 0.03);
-    padding: 0.8rem;
-    border-radius: 12px;
-    border: 1px solid rgba(255, 255, 255, 0.08);
-}
-
-/* This forces EVERY image inside a cert-item to be tiny */
-.cert-item img {
-    width: 35px !important;
-    height: 35px !important;
-    min-width: 35px !important;
-    max-width: 35px !important;
-    object-fit: contain !important;
-    flex-shrink: 0 !important;
-    border-radius: 4px;
-    cursor: zoom-in;
-}
-
-.cert-item span {
-    font-size: 0.85rem;
-    color: #a1a1aa;
-    line-height: 1.3;
-    /* This allows the text to wrap to the next line instead of cutting off */
-    white-space: normal; 
-    word-break: break-word;
-}
-
-/* Hide the mobile curve on desktop */
-.menu-curve {
-    display: none;
-}
+/* --- EDUCATION TIMELINE REVEAL --- */
+.timeline-item { opacity: 0; transform: translateX(-30px); transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1); }
+.timeline-card.animate-in .timeline-item { opacity: 1; transform: translateX(0); }
+.timeline-card.animate-in .timeline-item:nth-child(1) { transition-delay: 0.4s; }
+.timeline-card.animate-in .timeline-item:nth-child(2) { transition-delay: 0.6s; }
+.timeline-card.animate-in .timeline-item:nth-child(3) { transition-delay: 0.8s; }
+.timeline-card.animate-in .timeline-item:nth-child(4) { transition-delay: 1.0s; }
 
 /* --- RESPONSIVE DESIGN --- */
 @media (max-width: 1024px) {
@@ -461,100 +339,39 @@ footer {
 }
 
 @media (max-width: 768px) {
-    /* Mobile Menu Toggle */
     #mobile-menu-toggle { display: block; }
     
-    /* 1. Set the transition speed for the lines */
     #mobile-menu-toggle line {
         transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.3s ease;
         transform-origin: center;
     }
-
-    /* 2. Top line slides down and rotates 45 degrees */
-    #mobile-menu-toggle.is-active .line-top {
-        transform: translateY(6px) rotate(45deg);
-    }
-
-    /* 3. Middle line fades out instantly */
-    #mobile-menu-toggle.is-active .line-middle {
-        opacity: 0;
-    }
-
-    /* 4. Bottom line slides up and rotates -45 degrees */
-    #mobile-menu-toggle.is-active .line-bottom {
-        transform: translateY(-6px) rotate(-45deg);
-    }
-   
-    
+    #mobile-menu-toggle.is-active .line-top { transform: translateY(6px) rotate(45deg); }
+    #mobile-menu-toggle.is-active .line-middle { opacity: 0; }
+    #mobile-menu-toggle.is-active .line-bottom { transform: translateY(-6px) rotate(-45deg); }
+      
     /* --- OFFCANVAS SLIDING MENU --- */
-    /* --- OFFCANVAS SLIDING MENU (RIGHT SIDE) --- */
     .sliding-menu-container {
-        position: fixed;
-        top: 0;
-        right: -100%; /* Hide off-screen to the RIGHT */
-        width: 70%;
-        height: 100vh;
-        background: rgba(9, 9, 11, 0.98); 
-        backdrop-filter: blur(12px);
-        z-index: 999;
-        /* Animate the 'right' property instead of 'left' */
+        position: fixed; top: 0; right: -100%; width: 70%; height: 100vh;
+        background: var(--menu-bg); /* FIXED: Syncs properly with light/dark theme */
+        backdrop-filter: blur(12px); z-index: 999;
         transition: right 0.5s cubic-bezier(0.77, 0, 0.175, 1);
-        display: flex;
-        align-items: center; 
-        justify-content: center;
-        /* Move shadow to the left side of the menu */
+        display: flex; align-items: center; justify-content: center;
         box-shadow: -20px 0 50px rgba(0, 0, 0, 0.5); 
     }
-
-    .sliding-menu-container.active {
-        right: 0; /* Slide in to sit flush against the right edge */
-    }
+    .sliding-menu-container.active { right: 0; }
 
     /* The Curved Edge styling for Mobile */
     .menu-curve {
-        display: block; 
-        position: absolute;
-        top: 0;
-        left: -99px; /* Attach to the LEFT side of the sliding menu */
-        width: 100px;
-        height: 100%;
-        fill: rgba(9, 9, 11, 0.98); 
-        pointer-events: none;
-        /* Flips the SVG horizontally so the curve faces the right way! */
-        transform: scaleX(-1); 
-    }
-
-    /* ... (Keep your .nav-links block exactly the same) ... */
-    .nav-links {
-        display: flex;
-        flex-direction: column;
-        gap: 2rem;
-        width: 100%;
-        padding: 0 2rem;
-    }
-
-    .nav-links li {
-        text-align: right; /* Align text to the right closer to the button */
-        border: none;
-        opacity: 0; 
-        transform: translateX(20px); /* Links slide in slightly from the right */
-        transition: all 0.4s ease;
-    }
-
-    .nav-links a {
-        font-size: 1.5rem; 
-        font-weight: bold;
-        letter-spacing: 2px;
-        text-transform: uppercase;
-    }
-
-    /* Animate links in slightly after the menu slides */
-    .sliding-menu-container.active .nav-links li {
-        opacity: 1;
-        transform: translateX(0);
+        display: block; position: absolute; top: 0; left: -99px; width: 100px; height: 100%;
+        fill: var(--menu-bg); /* FIXED: Syncs properly with light/dark theme */
+        pointer-events: none; transform: scaleX(-1); 
     }
     
-    /* Stagger the link animations */
+    .nav-links { display: flex; flex-direction: column; gap: 2rem; width: 100%; padding: 0 2rem; }
+    .nav-links li { text-align: right; border: none; opacity: 0; transform: translateX(20px); transition: all 0.4s ease; }
+    .nav-links a { font-size: 1.5rem; font-weight: bold; letter-spacing: 2px; text-transform: uppercase; }
+
+    .sliding-menu-container.active .nav-links li { opacity: 1; transform: translateX(0); }
     .sliding-menu-container.active .nav-links li:nth-child(1) { transition-delay: 0.2s; }
     .sliding-menu-container.active .nav-links li:nth-child(2) { transition-delay: 0.3s; }
     .sliding-menu-container.active .nav-links li:nth-child(3) { transition-delay: 0.4s; }
@@ -562,193 +379,104 @@ footer {
     .sliding-menu-container.active .nav-links li:nth-child(5) { transition-delay: 0.6s; }
     .sliding-menu-container.active .nav-links li:nth-child(6) { transition-delay: 0.7s; }
 
-    /* Move the hamburger button above the menu */
-    #mobile-menu-toggle {
-        position: relative;
-        z-index: 1000; /* Must be higher than the sliding menu */
-    }
+    #mobile-menu-toggle { position: relative; z-index: 1000; }
     
-
     .hero-card h1 { font-size: 1.9rem; }
     .tagline { font-size: 1.2rem; }
     .bio { font-size: 1rem; }
 
-    /* Bento Grid Mobile Adjustments */
     .bento-grid { grid-template-columns: 1fr; }
     .col-span-2, .col-span-3 { grid-column: span 1; }
     .row-span-2 { grid-row: span 1; }
     
-    
-    .action-links { 
-        flex-direction: row; 
-        flex-wrap: wrap; 
-        gap: 0.5rem; 
-        width: 100%; 
-    }
-    
-    .btn { 
-        width: auto; 
-        padding: 0.6rem 0.8rem; 
-        font-size: 0.85rem; 
-        justify-content: center; 
-        flex: 1 1 auto; 
-    }
+    .action-links { flex-direction: row; flex-wrap: wrap; gap: 0.5rem; width: 100%; }
+    .btn { width: auto; padding: 0.6rem 0.8rem; font-size: 0.85rem; justify-content: center; flex: 1 1 auto; }
 
-    /* Fix long code text in About Card */
-    .about-card h3 {
-        font-size: 1.1rem;
-        word-wrap: break-word;
-    }
-
+    .about-card h3 { font-size: 1.1rem; word-wrap: break-word; }
     .form-row { flex-direction: column; }
-    .certs-grid { grid-template-columns: 1fr !important; }
-    footer {
-        margin-top: 1rem;
-        font-size: 0.8rem;
+    
+    .certs-grid {
+        display: flex !important;
+        flex-direction: row !important;
+        flex-wrap: nowrap !important;
+        overflow-x: auto !important;
+        scroll-snap-type: x mandatory;
+        padding-bottom: 1rem;
+        -webkit-overflow-scrolling: touch;
     }
+    .cert-item {
+        flex: 0 0 85% !important; 
+        max-width: 85% !important;
+        scroll-snap-align: center; 
+    }
+    .certs-grid::-webkit-scrollbar { display: none; }
+    footer { margin-top: 1rem; font-size: 0.8rem; }
+    
+    #projects .bento-grid { display: flex; flex-direction: column; gap: 3rem; padding-bottom: 4rem; }
+    #projects .project-card {
+        position: sticky; background: var(--bg-dark); border: 1px solid var(--card-border);
+        box-shadow: 0 -20px 40px rgba(0, 0, 0, 0.9); transition: transform 0.3s ease, border-color 0.3s ease;
+    }
+    #projects .project-card:nth-child(1) { top: 80px; z-index: 10; }
+    #projects .project-card:nth-child(2) { top: 90px; z-index: 20; }
+    #projects .project-card:nth-child(3) { top: 100px; z-index: 30; }
+    #projects .project-card:nth-child(4) { top: 110px; z-index: 40; }
 }
 
 /* --- CUSTOM SELECTION COLOR --- */
-::selection {
-    background-color: var(--accent-color);
-    color: #ffffff;
-}
-::-moz-selection {
-    background-color: var(--accent-color);
-    color: #ffffff;
-}
+::selection { background-color: var(--accent-color); color: #ffffff; }
+::-moz-selection { background-color: var(--accent-color); color: #ffffff; }
 
 /* --- CUSTOM SCROLLBAR --- */
-::-webkit-scrollbar {
-    width: 10px;
-}
-::-webkit-scrollbar-track {
-    background: var(--bg-dark); 
-}
+::-webkit-scrollbar { width: 10px; }
+::-webkit-scrollbar-track { background: var(--bg-dark); }
 ::-webkit-scrollbar-thumb {
-    background: #27272a; 
-    border-radius: 10px;
-    border: 2px solid var(--bg-dark); /* Creates a padded look */
+    background: var(--scrollbar-thumb); /* FIXED */
+    border-radius: 10px; border: 2px solid var(--bg-dark); 
 }
-::-webkit-scrollbar-thumb:hover {
-    background: var(--accent-color); 
-}
+::-webkit-scrollbar-thumb:hover { background: var(--accent-color); }
+
 /* --- AMBIENT BACKGROUND GLOW --- */
 body::before, body::after {
-    content: "";
-    position: fixed;
-    width: 600px;
-    height: 600px;
-    border-radius: 50%;
-    z-index: -1; /* Keeps it behind everything */
-    filter: blur(120px); /* The magic blur effect */
-    opacity: 0.15;
-    pointer-events: none;
+    content: ""; position: fixed; width: 600px; height: 600px; border-radius: 50%;
+    z-index: -1; filter: blur(120px); opacity: 0.15; pointer-events: none;
 }
-
-/* Top left blue glow */
-body::before {
-    top: -200px;
-    left: -200px;
-    background: var(--accent-color);
-}
-
-/* Bottom right teal glow */
-body::after {
-    bottom: -200px;
-    right: -200px;
-    background: #2dd4bf;
-}
+body::before { top: -200px; left: -200px; background: var(--accent-color); }
+body::after { bottom: -200px; right: -200px; background: #2dd4bf; }
 
 /* --- CERTIFICATE MODAL --- */
 .modal {
-    display: none; 
-    position: fixed; 
-    z-index: 2000; 
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.9);
-    backdrop-filter: blur(8px);
+    display: none; position: fixed; z-index: 2000; left: 0; top: 0; width: 100%; height: 100%;
+    background-color: rgba(0, 0, 0, 0.9); backdrop-filter: blur(8px);
 }
-
 .modal-content {
-    margin: auto;
-    display: block;
-    width: 90vw;           /* Forces it to take up 90% of screen width */
-    height: 90vh;          /* Forces it to take up 90% of screen height */
-    max-width: 1200px;     /* Prevents it from getting too pixelated on massive monitors */
-    object-fit: contain;   /* Safely scales the image up to fill that space without squishing it */
-    border-radius: var(--radius-md);
-    cursor: zoom-out;
+    margin: auto; display: block; width: 90vw; height: 90vh; max-width: 1200px; 
+    object-fit: contain; border-radius: var(--radius-md); cursor: zoom-out;
 }
-.close-modal {
-    position: absolute;
-    top: 20px;
-    right: 35px;
-    color: #fff;
-    font-size: 40px;
-    cursor: pointer;
-}
+.close-modal { position: absolute; top: 20px; right: 35px; color: #fff; font-size: 40px; cursor: pointer; }
 
-/* --- BACK TO TOP BUTTON (BENTO THEME) --- */
+/* --- BACK TO TOP BUTTON --- */
 #backToTop {
-    display: none; /* Hidden by default */
-    position: fixed;
-    bottom: 40px;
-    right: 40px;
-    z-index: 999;
-    
-    /* Matches your Bento Cards */
-    background: rgba(255, 255, 255, 0.03);
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
-    border: 1px solid var(--card-border);
-    color: var(--text-secondary);
-    
-    /* Perfect Circle Centering */
-    width: 50px;
-    height: 50px;
-    border-radius: 50%;
-    font-size: 1.2rem;
-    cursor: pointer;
-    transition: var(--transition);
-    
-    /* Centers the icon inside the button */
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    display: none; position: fixed; bottom: 40px; right: 40px; z-index: 999;
+    background: var(--surface-color); /* FIXED */
+    backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+    border: 1px solid var(--card-border); color: var(--text-secondary);
+    width: 50px; height: 50px; border-radius: 50%; font-size: 1.2rem;
+    cursor: pointer; transition: var(--transition);
+    display: flex; align-items: center; justify-content: center;
 }
-
-/* The neon hover effect from your cards */
 #backToTop:hover {
-    background: rgba(14, 165, 233, 0.1);
-    border-color: var(--accent-color);
+    background: var(--hover-pill-bg); 
+    border-color: var(--accent-color); 
     color: var(--accent-color);
-    transform: translateY(-5px);
-    box-shadow: 0 10px 30px var(--accent-glow);
+    transform: translateY(-5px); 
+    box-shadow: var(--hover-shadow);
 }
 
-/* Mobile adjustment */
-@media (max-width: 768px) {
-    #backToTop {
-        bottom: 50px;
-        right: 20px;
-        width: 45px;
-        height: 45px;
-    }
-}
-/* --- BACK TO TOP CLICK ANIMATIONS --- */
-
-/* --- ROCKET LAUNCH ANIMATION --- */
-.btn-launch {
-    /* cubic-bezier gives it a realistic acceleration curve */
-    animation: launchTop 0.6s cubic-bezier(0.55, 0.055, 0.675, 0.19) forwards;
-}
-
+@media (max-width: 768px) { #backToTop { bottom: 50px; right: 20px; width: 45px; height: 45px; } }
+.btn-launch { animation: launchTop 0.6s cubic-bezier(0.55, 0.055, 0.675, 0.19) forwards; }
 @keyframes launchTop {
     0% { transform: translateY(0) scale(1); opacity: 1; }
-    30% { transform: translateY(10px) scale(0.9); opacity: 1; border-color: var(--accent-color); } /* Squish down */
-    100% { transform: translateY(-300px) scale(0.5); opacity: 0; } /* Blast off out of frame */
+    30% { transform: translateY(10px) scale(0.9); opacity: 1; border-color: var(--accent-color); }
+    100% { transform: translateY(-300px) scale(0.5); opacity: 0; } 
 }

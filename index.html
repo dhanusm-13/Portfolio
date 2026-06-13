@@ -15,11 +15,11 @@
 <body class="dark-theme">
     
     <nav class="navbar">
+    <div id="scroll-progress"></div>
+    
     <div class="logo">Dhananjaya S M</div>
     
-    <!-- Sliding Mobile Menu Container -->
     <div class="sliding-menu-container" id="sliding-menu">
-        <!-- The curved SVG edge -->
         <svg class="menu-curve" viewBox="0 0 100 800" preserveAspectRatio="none">
             <path d="M0,0 Q100,400 0,800 L0,800 L0,0 Z"></path>
         </svg>
@@ -34,14 +34,21 @@
         </ul>
     </div>
 
-    <!-- Mobile Menu Toggle Button -->
-    <button id="mobile-menu-toggle" aria-label="Open Mobile Menu">
-        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <line class="line-top" x1="3" y1="6" x2="21" y2="6"></line>
-            <line class="line-middle" x1="3" y1="12" x2="21" y2="12"></line>
-            <line class="line-bottom" x1="3" y1="18" x2="21" y2="18"></line>
-        </svg>
-    </button>
+    <div class="nav-controls" style="display: flex; align-items: center; gap: 1.5rem; z-index: 1000;">
+        
+        <button id="theme-toggle" aria-label="Toggle Theme" style="background: none; border: none; color: var(--text-primary); font-size: 1.2rem; cursor: pointer; transition: transform 0.3s ease;">
+            <i class="fas fa-sun"></i>
+        </button>
+
+        <button id="mobile-menu-toggle" aria-label="Open Mobile Menu">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <line class="line-top" x1="3" y1="6" x2="21" y2="6"></line>
+                <line class="line-middle" x1="3" y1="12" x2="21" y2="12"></line>
+                <line class="line-bottom" x1="3" y1="18" x2="21" y2="18"></line>
+            </svg>
+        </button>
+        
+    </div>
 </nav>
 
     <main class="container">
@@ -51,7 +58,9 @@
             <div class="bento-card col-span-2 row-span-2 hero-card">
                 <img src="assets/d.png" alt="Dhananjaya S M" class="hero-avatar" loading="lazy">
                 <h1 class="gradient-text">Dhananjaya S M</h1>
-                <p class="tagline">Software Developer & Data Analyst</p>
+                <p class="tagline">
+                    <span id="typewriter"></span><span class="blinking-cursor">|</span>
+                </p>
                 <p class="bio">I build high-performance backend systems, engineer AI workflows, and transform complex data into interactive business intelligence.</p>
                 <div class="action-links">
                     <a href="#contact" class="btn btn-primary">Let's Talk</a>
